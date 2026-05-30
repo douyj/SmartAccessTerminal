@@ -60,13 +60,13 @@ int main(void)
             ui_set_state(UI_STATE_VERIFYING);
         } else if (tick == 850) {
             ui_show_success("Deng Yangjie", 0.96f, 3);
-        } else if (tick == 1300) {
+        } else if (tick == 1500) {
             ui_show_deny("Unknown", 0.31f);
-        } else if (tick == 1700) {
+        } else if (tick == 2150) {
             ui_show_no_face();
-        } else if (tick == 2100) {
+        } else if (tick == 2800) {
             ui_show_error("TCP disconnected");
-        } else if (tick > 2500) {
+        } else if (tick > 3500) {
             tick = 0;
             ui_set_state(UI_STATE_IDLE);
         }
