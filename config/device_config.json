@@ -1,0 +1,15 @@
+{
+  "device_id": "imx6ull_001",
+  "server_ip": "127.0.0.1",
+  "server_port": 9000,
+
+  "camera_dev": "/dev/video1",
+  "image_width": 640,
+  "image_height": 480,
+
+  "test_image_path": "./test_data/dyj.jpg",
+  "snapshot_dir": "./output/snapshots",
+  
+  "log_level": "INFO",
+  "log_detail": 0
+}

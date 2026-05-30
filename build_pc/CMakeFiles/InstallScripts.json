@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/build_pc/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
