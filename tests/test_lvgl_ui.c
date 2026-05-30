@@ -1,13 +1,12 @@
 #include "lvgl/lvgl.h"
 #include "ui/ui_main.h"
 
-#include <unistd.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #if USE_SDL
 #include "sdl/sdl.h"
 #endif
-
 
 int main(void)
 {
@@ -17,17 +16,17 @@ int main(void)
     sdl_init();
 
     static lv_disp_draw_buf_t draw_buf;
-    static lv_color_t buf1[800 * 80];
+    static lv_color_t buf1[480 * 80];
 
-    lv_disp_draw_buf_init(&draw_buf, buf1, NULL, 800 * 80);
+    lv_disp_draw_buf_init(&draw_buf, buf1, NULL, 480 * 80);
 
     static lv_disp_drv_t disp_drv;
     lv_disp_drv_init(&disp_drv);
 
     disp_drv.draw_buf = &draw_buf;
     disp_drv.flush_cb = sdl_display_flush;
-    disp_drv.hor_res = 800;
-    disp_drv.ver_res = 480;
+    disp_drv.hor_res = 480;
+    disp_drv.ver_res = 800;
 
     lv_disp_drv_register(&disp_drv);
 #else
@@ -36,42 +35,40 @@ int main(void)
 #endif
 
     ui_main_create();
-
-    ui_set_device_info(
-        "imx6ull_001",
-        "192.168.43.30:9000",
-        "/dev/video1"
-    );
-
-    ui_set_status("WAITING");
+    ui_set_top_info("23:13", 1, 1);
 
     int tick = 0;
 
     while (1) {
+    #if USE_SDL
+        if (sdl_quit_qry) {
+            break;
+        }
+    #endif
+
+        lv_tick_inc(5);
         lv_timer_handler();
         usleep(5 * 1000);
 
         tick++;
 
         if (tick == 200) {
-            ui_set_status("CAPTURING");
+            ui_set_state(UI_STATE_CAPTURING);
         } else if (tick == 400) {
-            ui_set_status("UPLOADING");
+            ui_set_state(UI_STATE_UPLOADING);
         } else if (tick == 600) {
-            ui_set_status("ALLOW");
-            ui_show_result("allow", "DengYangjie", 0.96f, "open_door");
-        } else if (tick == 1000) {
-            ui_set_status("DENY");
-            ui_show_result("deny", "Unknown", 0.42f, "alarm_beep");
-        } else if (tick == 1400) {
-            ui_set_status("NO_FACE");
-            ui_show_result("no_face", "None", 0.00f, "none");
-        } else if (tick == 1800) {
-            ui_show_error("connect server failed");
-        } else if (tick > 2200) {
+            ui_set_state(UI_STATE_VERIFYING);
+        } else if (tick == 850) {
+            ui_show_success("Deng Yangjie", 0.96f, 3);
+        } else if (tick == 1300) {
+            ui_show_deny("Unknown", 0.31f);
+        } else if (tick == 1700) {
+            ui_show_no_face();
+        } else if (tick == 2100) {
+            ui_show_error("TCP disconnected");
+        } else if (tick > 2500) {
             tick = 0;
-            ui_set_status("WAITING");
-            ui_show_result("-", "-", 0.0f, "-");
+            ui_set_state(UI_STATE_IDLE);
         }
     }
 

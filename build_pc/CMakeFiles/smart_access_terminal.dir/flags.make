@@ -4,7 +4,7 @@
 # compile C with /usr/bin/gcc
 C_DEFINES = 
 
-C_INCLUDES = -I/home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/include
+C_INCLUDES = -I/home/dyj/linux_project/SmartAccessTerminal/include
 
 C_FLAGS = -std=gnu99
 

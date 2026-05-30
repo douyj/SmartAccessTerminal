@@ -1,17 +1,13 @@
-# V1版本
-```shell
-客户端发送 jpg → 服务端保存图片 → 服务端固定返回 allow
-```
+# 运行lvgl编译
+rm -rf build_pc
+mkdir build_pc
+cd build_pc
 
-# V2版本
-```shell
-客户端发送 jpg
-        ↓
-服务端根据文件名模拟识别
-        ↓
-返回 allow / deny / no_face
-        ↓
-客户端解析 JSON
-        ↓
-打印：开门 / 拒绝 / 未检测到人脸
-```
+cmake .. \
+  -DCMAKE_C_COMPILER=/usr/bin/gcc \
+  -DBUILD_LVGL_UI_TEST=ON
+
+make test_lvgl_ui -j4
+
+# 启动ubuntu gui
+sudo systemctl start graphical.target

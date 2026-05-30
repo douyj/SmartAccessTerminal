@@ -55,6 +55,7 @@ if(BUILD_LVGL_UI_TEST)
         ${PROJECT_SOURCE_DIR}/src/third_party/lv_drivers/sdl/*.c
         ${PROJECT_SOURCE_DIR}/src/third_party/lv_drivers/indev/*.c
     )
+
     add_executable(test_lvgl_ui
         tests/test_lvgl_ui.c
         src/ui/ui_main.c

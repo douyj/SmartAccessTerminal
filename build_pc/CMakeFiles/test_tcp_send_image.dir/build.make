@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal
+CMAKE_SOURCE_DIR = /home/dyj/linux_project/SmartAccessTerminal
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/build_pc
+CMAKE_BINARY_DIR = /home/dyj/linux_project/SmartAccessTerminal/build_pc
 
 # Include any dependencies generated for this target.
 include CMakeFiles/test_tcp_send_image.dir/depend.make
@@ -73,144 +73,144 @@ CMakeFiles/test_tcp_send_image.dir/codegen:
 .PHONY : CMakeFiles/test_tcp_send_image.dir/codegen
 
 CMakeFiles/test_tcp_send_image.dir/tests/test_tcp_send_image.c.o: CMakeFiles/test_tcp_send_image.dir/flags.make
-CMakeFiles/test_tcp_send_image.dir/tests/test_tcp_send_image.c.o: /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/tests/test_tcp_send_image.c
+CMakeFiles/test_tcp_send_image.dir/tests/test_tcp_send_image.c.o: /home/dyj/linux_project/SmartAccessTerminal/tests/test_tcp_send_image.c
 CMakeFiles/test_tcp_send_image.dir/tests/test_tcp_send_image.c.o: CMakeFiles/test_tcp_send_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/build_pc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/test_tcp_send_image.dir/tests/test_tcp_send_image.c.o"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_tcp_send_image.dir/tests/test_tcp_send_image.c.o -MF CMakeFiles/test_tcp_send_image.dir/tests/test_tcp_send_image.c.o.d -o CMakeFiles/test_tcp_send_image.dir/tests/test_tcp_send_image.c.o -c /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/tests/test_tcp_send_image.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dyj/linux_project/SmartAccessTerminal/build_pc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/test_tcp_send_image.dir/tests/test_tcp_send_image.c.o"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_tcp_send_image.dir/tests/test_tcp_send_image.c.o -MF CMakeFiles/test_tcp_send_image.dir/tests/test_tcp_send_image.c.o.d -o CMakeFiles/test_tcp_send_image.dir/tests/test_tcp_send_image.c.o -c /home/dyj/linux_project/SmartAccessTerminal/tests/test_tcp_send_image.c
 
 CMakeFiles/test_tcp_send_image.dir/tests/test_tcp_send_image.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/test_tcp_send_image.dir/tests/test_tcp_send_image.c.i"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/tests/test_tcp_send_image.c > CMakeFiles/test_tcp_send_image.dir/tests/test_tcp_send_image.c.i
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/dyj/linux_project/SmartAccessTerminal/tests/test_tcp_send_image.c > CMakeFiles/test_tcp_send_image.dir/tests/test_tcp_send_image.c.i
 
 CMakeFiles/test_tcp_send_image.dir/tests/test_tcp_send_image.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/test_tcp_send_image.dir/tests/test_tcp_send_image.c.s"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/tests/test_tcp_send_image.c -o CMakeFiles/test_tcp_send_image.dir/tests/test_tcp_send_image.c.s
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/dyj/linux_project/SmartAccessTerminal/tests/test_tcp_send_image.c -o CMakeFiles/test_tcp_send_image.dir/tests/test_tcp_send_image.c.s
 
 CMakeFiles/test_tcp_send_image.dir/src/common/log.c.o: CMakeFiles/test_tcp_send_image.dir/flags.make
-CMakeFiles/test_tcp_send_image.dir/src/common/log.c.o: /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/common/log.c
+CMakeFiles/test_tcp_send_image.dir/src/common/log.c.o: /home/dyj/linux_project/SmartAccessTerminal/src/common/log.c
 CMakeFiles/test_tcp_send_image.dir/src/common/log.c.o: CMakeFiles/test_tcp_send_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/build_pc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/test_tcp_send_image.dir/src/common/log.c.o"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_tcp_send_image.dir/src/common/log.c.o -MF CMakeFiles/test_tcp_send_image.dir/src/common/log.c.o.d -o CMakeFiles/test_tcp_send_image.dir/src/common/log.c.o -c /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/common/log.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dyj/linux_project/SmartAccessTerminal/build_pc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/test_tcp_send_image.dir/src/common/log.c.o"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_tcp_send_image.dir/src/common/log.c.o -MF CMakeFiles/test_tcp_send_image.dir/src/common/log.c.o.d -o CMakeFiles/test_tcp_send_image.dir/src/common/log.c.o -c /home/dyj/linux_project/SmartAccessTerminal/src/common/log.c
 
 CMakeFiles/test_tcp_send_image.dir/src/common/log.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/test_tcp_send_image.dir/src/common/log.c.i"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/common/log.c > CMakeFiles/test_tcp_send_image.dir/src/common/log.c.i
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/dyj/linux_project/SmartAccessTerminal/src/common/log.c > CMakeFiles/test_tcp_send_image.dir/src/common/log.c.i
 
 CMakeFiles/test_tcp_send_image.dir/src/common/log.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/test_tcp_send_image.dir/src/common/log.c.s"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/common/log.c -o CMakeFiles/test_tcp_send_image.dir/src/common/log.c.s
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/dyj/linux_project/SmartAccessTerminal/src/common/log.c -o CMakeFiles/test_tcp_send_image.dir/src/common/log.c.s
 
 CMakeFiles/test_tcp_send_image.dir/src/config/device_config.c.o: CMakeFiles/test_tcp_send_image.dir/flags.make
-CMakeFiles/test_tcp_send_image.dir/src/config/device_config.c.o: /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/config/device_config.c
+CMakeFiles/test_tcp_send_image.dir/src/config/device_config.c.o: /home/dyj/linux_project/SmartAccessTerminal/src/config/device_config.c
 CMakeFiles/test_tcp_send_image.dir/src/config/device_config.c.o: CMakeFiles/test_tcp_send_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/build_pc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/test_tcp_send_image.dir/src/config/device_config.c.o"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_tcp_send_image.dir/src/config/device_config.c.o -MF CMakeFiles/test_tcp_send_image.dir/src/config/device_config.c.o.d -o CMakeFiles/test_tcp_send_image.dir/src/config/device_config.c.o -c /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/config/device_config.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dyj/linux_project/SmartAccessTerminal/build_pc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/test_tcp_send_image.dir/src/config/device_config.c.o"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_tcp_send_image.dir/src/config/device_config.c.o -MF CMakeFiles/test_tcp_send_image.dir/src/config/device_config.c.o.d -o CMakeFiles/test_tcp_send_image.dir/src/config/device_config.c.o -c /home/dyj/linux_project/SmartAccessTerminal/src/config/device_config.c
 
 CMakeFiles/test_tcp_send_image.dir/src/config/device_config.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/test_tcp_send_image.dir/src/config/device_config.c.i"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/config/device_config.c > CMakeFiles/test_tcp_send_image.dir/src/config/device_config.c.i
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/dyj/linux_project/SmartAccessTerminal/src/config/device_config.c > CMakeFiles/test_tcp_send_image.dir/src/config/device_config.c.i
 
 CMakeFiles/test_tcp_send_image.dir/src/config/device_config.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/test_tcp_send_image.dir/src/config/device_config.c.s"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/config/device_config.c -o CMakeFiles/test_tcp_send_image.dir/src/config/device_config.c.s
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/dyj/linux_project/SmartAccessTerminal/src/config/device_config.c -o CMakeFiles/test_tcp_send_image.dir/src/config/device_config.c.s
 
 CMakeFiles/test_tcp_send_image.dir/src/storage/snapshot_storage.c.o: CMakeFiles/test_tcp_send_image.dir/flags.make
-CMakeFiles/test_tcp_send_image.dir/src/storage/snapshot_storage.c.o: /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/storage/snapshot_storage.c
+CMakeFiles/test_tcp_send_image.dir/src/storage/snapshot_storage.c.o: /home/dyj/linux_project/SmartAccessTerminal/src/storage/snapshot_storage.c
 CMakeFiles/test_tcp_send_image.dir/src/storage/snapshot_storage.c.o: CMakeFiles/test_tcp_send_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/build_pc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/test_tcp_send_image.dir/src/storage/snapshot_storage.c.o"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_tcp_send_image.dir/src/storage/snapshot_storage.c.o -MF CMakeFiles/test_tcp_send_image.dir/src/storage/snapshot_storage.c.o.d -o CMakeFiles/test_tcp_send_image.dir/src/storage/snapshot_storage.c.o -c /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/storage/snapshot_storage.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dyj/linux_project/SmartAccessTerminal/build_pc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/test_tcp_send_image.dir/src/storage/snapshot_storage.c.o"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_tcp_send_image.dir/src/storage/snapshot_storage.c.o -MF CMakeFiles/test_tcp_send_image.dir/src/storage/snapshot_storage.c.o.d -o CMakeFiles/test_tcp_send_image.dir/src/storage/snapshot_storage.c.o -c /home/dyj/linux_project/SmartAccessTerminal/src/storage/snapshot_storage.c
 
 CMakeFiles/test_tcp_send_image.dir/src/storage/snapshot_storage.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/test_tcp_send_image.dir/src/storage/snapshot_storage.c.i"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/storage/snapshot_storage.c > CMakeFiles/test_tcp_send_image.dir/src/storage/snapshot_storage.c.i
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/dyj/linux_project/SmartAccessTerminal/src/storage/snapshot_storage.c > CMakeFiles/test_tcp_send_image.dir/src/storage/snapshot_storage.c.i
 
 CMakeFiles/test_tcp_send_image.dir/src/storage/snapshot_storage.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/test_tcp_send_image.dir/src/storage/snapshot_storage.c.s"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/storage/snapshot_storage.c -o CMakeFiles/test_tcp_send_image.dir/src/storage/snapshot_storage.c.s
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/dyj/linux_project/SmartAccessTerminal/src/storage/snapshot_storage.c -o CMakeFiles/test_tcp_send_image.dir/src/storage/snapshot_storage.c.s
 
 CMakeFiles/test_tcp_send_image.dir/src/camera/camera_v4l2.c.o: CMakeFiles/test_tcp_send_image.dir/flags.make
-CMakeFiles/test_tcp_send_image.dir/src/camera/camera_v4l2.c.o: /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/camera/camera_v4l2.c
+CMakeFiles/test_tcp_send_image.dir/src/camera/camera_v4l2.c.o: /home/dyj/linux_project/SmartAccessTerminal/src/camera/camera_v4l2.c
 CMakeFiles/test_tcp_send_image.dir/src/camera/camera_v4l2.c.o: CMakeFiles/test_tcp_send_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/build_pc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/test_tcp_send_image.dir/src/camera/camera_v4l2.c.o"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_tcp_send_image.dir/src/camera/camera_v4l2.c.o -MF CMakeFiles/test_tcp_send_image.dir/src/camera/camera_v4l2.c.o.d -o CMakeFiles/test_tcp_send_image.dir/src/camera/camera_v4l2.c.o -c /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/camera/camera_v4l2.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dyj/linux_project/SmartAccessTerminal/build_pc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/test_tcp_send_image.dir/src/camera/camera_v4l2.c.o"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_tcp_send_image.dir/src/camera/camera_v4l2.c.o -MF CMakeFiles/test_tcp_send_image.dir/src/camera/camera_v4l2.c.o.d -o CMakeFiles/test_tcp_send_image.dir/src/camera/camera_v4l2.c.o -c /home/dyj/linux_project/SmartAccessTerminal/src/camera/camera_v4l2.c
 
 CMakeFiles/test_tcp_send_image.dir/src/camera/camera_v4l2.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/test_tcp_send_image.dir/src/camera/camera_v4l2.c.i"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/camera/camera_v4l2.c > CMakeFiles/test_tcp_send_image.dir/src/camera/camera_v4l2.c.i
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/dyj/linux_project/SmartAccessTerminal/src/camera/camera_v4l2.c > CMakeFiles/test_tcp_send_image.dir/src/camera/camera_v4l2.c.i
 
 CMakeFiles/test_tcp_send_image.dir/src/camera/camera_v4l2.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/test_tcp_send_image.dir/src/camera/camera_v4l2.c.s"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/camera/camera_v4l2.c -o CMakeFiles/test_tcp_send_image.dir/src/camera/camera_v4l2.c.s
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/dyj/linux_project/SmartAccessTerminal/src/camera/camera_v4l2.c -o CMakeFiles/test_tcp_send_image.dir/src/camera/camera_v4l2.c.s
 
 CMakeFiles/test_tcp_send_image.dir/src/network/tcp_client.c.o: CMakeFiles/test_tcp_send_image.dir/flags.make
-CMakeFiles/test_tcp_send_image.dir/src/network/tcp_client.c.o: /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/network/tcp_client.c
+CMakeFiles/test_tcp_send_image.dir/src/network/tcp_client.c.o: /home/dyj/linux_project/SmartAccessTerminal/src/network/tcp_client.c
 CMakeFiles/test_tcp_send_image.dir/src/network/tcp_client.c.o: CMakeFiles/test_tcp_send_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/build_pc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/test_tcp_send_image.dir/src/network/tcp_client.c.o"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_tcp_send_image.dir/src/network/tcp_client.c.o -MF CMakeFiles/test_tcp_send_image.dir/src/network/tcp_client.c.o.d -o CMakeFiles/test_tcp_send_image.dir/src/network/tcp_client.c.o -c /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/network/tcp_client.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dyj/linux_project/SmartAccessTerminal/build_pc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/test_tcp_send_image.dir/src/network/tcp_client.c.o"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_tcp_send_image.dir/src/network/tcp_client.c.o -MF CMakeFiles/test_tcp_send_image.dir/src/network/tcp_client.c.o.d -o CMakeFiles/test_tcp_send_image.dir/src/network/tcp_client.c.o -c /home/dyj/linux_project/SmartAccessTerminal/src/network/tcp_client.c
 
 CMakeFiles/test_tcp_send_image.dir/src/network/tcp_client.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/test_tcp_send_image.dir/src/network/tcp_client.c.i"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/network/tcp_client.c > CMakeFiles/test_tcp_send_image.dir/src/network/tcp_client.c.i
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/dyj/linux_project/SmartAccessTerminal/src/network/tcp_client.c > CMakeFiles/test_tcp_send_image.dir/src/network/tcp_client.c.i
 
 CMakeFiles/test_tcp_send_image.dir/src/network/tcp_client.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/test_tcp_send_image.dir/src/network/tcp_client.c.s"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/network/tcp_client.c -o CMakeFiles/test_tcp_send_image.dir/src/network/tcp_client.c.s
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/dyj/linux_project/SmartAccessTerminal/src/network/tcp_client.c -o CMakeFiles/test_tcp_send_image.dir/src/network/tcp_client.c.s
 
 CMakeFiles/test_tcp_send_image.dir/src/network/packet.c.o: CMakeFiles/test_tcp_send_image.dir/flags.make
-CMakeFiles/test_tcp_send_image.dir/src/network/packet.c.o: /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/network/packet.c
+CMakeFiles/test_tcp_send_image.dir/src/network/packet.c.o: /home/dyj/linux_project/SmartAccessTerminal/src/network/packet.c
 CMakeFiles/test_tcp_send_image.dir/src/network/packet.c.o: CMakeFiles/test_tcp_send_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/build_pc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/test_tcp_send_image.dir/src/network/packet.c.o"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_tcp_send_image.dir/src/network/packet.c.o -MF CMakeFiles/test_tcp_send_image.dir/src/network/packet.c.o.d -o CMakeFiles/test_tcp_send_image.dir/src/network/packet.c.o -c /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/network/packet.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dyj/linux_project/SmartAccessTerminal/build_pc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/test_tcp_send_image.dir/src/network/packet.c.o"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_tcp_send_image.dir/src/network/packet.c.o -MF CMakeFiles/test_tcp_send_image.dir/src/network/packet.c.o.d -o CMakeFiles/test_tcp_send_image.dir/src/network/packet.c.o -c /home/dyj/linux_project/SmartAccessTerminal/src/network/packet.c
 
 CMakeFiles/test_tcp_send_image.dir/src/network/packet.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/test_tcp_send_image.dir/src/network/packet.c.i"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/network/packet.c > CMakeFiles/test_tcp_send_image.dir/src/network/packet.c.i
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/dyj/linux_project/SmartAccessTerminal/src/network/packet.c > CMakeFiles/test_tcp_send_image.dir/src/network/packet.c.i
 
 CMakeFiles/test_tcp_send_image.dir/src/network/packet.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/test_tcp_send_image.dir/src/network/packet.c.s"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/network/packet.c -o CMakeFiles/test_tcp_send_image.dir/src/network/packet.c.s
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/dyj/linux_project/SmartAccessTerminal/src/network/packet.c -o CMakeFiles/test_tcp_send_image.dir/src/network/packet.c.s
 
 CMakeFiles/test_tcp_send_image.dir/src/protocol/access_protocol.c.o: CMakeFiles/test_tcp_send_image.dir/flags.make
-CMakeFiles/test_tcp_send_image.dir/src/protocol/access_protocol.c.o: /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/protocol/access_protocol.c
+CMakeFiles/test_tcp_send_image.dir/src/protocol/access_protocol.c.o: /home/dyj/linux_project/SmartAccessTerminal/src/protocol/access_protocol.c
 CMakeFiles/test_tcp_send_image.dir/src/protocol/access_protocol.c.o: CMakeFiles/test_tcp_send_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/build_pc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/test_tcp_send_image.dir/src/protocol/access_protocol.c.o"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_tcp_send_image.dir/src/protocol/access_protocol.c.o -MF CMakeFiles/test_tcp_send_image.dir/src/protocol/access_protocol.c.o.d -o CMakeFiles/test_tcp_send_image.dir/src/protocol/access_protocol.c.o -c /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/protocol/access_protocol.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dyj/linux_project/SmartAccessTerminal/build_pc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/test_tcp_send_image.dir/src/protocol/access_protocol.c.o"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_tcp_send_image.dir/src/protocol/access_protocol.c.o -MF CMakeFiles/test_tcp_send_image.dir/src/protocol/access_protocol.c.o.d -o CMakeFiles/test_tcp_send_image.dir/src/protocol/access_protocol.c.o -c /home/dyj/linux_project/SmartAccessTerminal/src/protocol/access_protocol.c
 
 CMakeFiles/test_tcp_send_image.dir/src/protocol/access_protocol.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/test_tcp_send_image.dir/src/protocol/access_protocol.c.i"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/protocol/access_protocol.c > CMakeFiles/test_tcp_send_image.dir/src/protocol/access_protocol.c.i
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/dyj/linux_project/SmartAccessTerminal/src/protocol/access_protocol.c > CMakeFiles/test_tcp_send_image.dir/src/protocol/access_protocol.c.i
 
 CMakeFiles/test_tcp_send_image.dir/src/protocol/access_protocol.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/test_tcp_send_image.dir/src/protocol/access_protocol.c.s"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/protocol/access_protocol.c -o CMakeFiles/test_tcp_send_image.dir/src/protocol/access_protocol.c.s
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/dyj/linux_project/SmartAccessTerminal/src/protocol/access_protocol.c -o CMakeFiles/test_tcp_send_image.dir/src/protocol/access_protocol.c.s
 
 CMakeFiles/test_tcp_send_image.dir/src/bsp/door.c.o: CMakeFiles/test_tcp_send_image.dir/flags.make
-CMakeFiles/test_tcp_send_image.dir/src/bsp/door.c.o: /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/bsp/door.c
+CMakeFiles/test_tcp_send_image.dir/src/bsp/door.c.o: /home/dyj/linux_project/SmartAccessTerminal/src/bsp/door.c
 CMakeFiles/test_tcp_send_image.dir/src/bsp/door.c.o: CMakeFiles/test_tcp_send_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/build_pc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/test_tcp_send_image.dir/src/bsp/door.c.o"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_tcp_send_image.dir/src/bsp/door.c.o -MF CMakeFiles/test_tcp_send_image.dir/src/bsp/door.c.o.d -o CMakeFiles/test_tcp_send_image.dir/src/bsp/door.c.o -c /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/bsp/door.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dyj/linux_project/SmartAccessTerminal/build_pc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/test_tcp_send_image.dir/src/bsp/door.c.o"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_tcp_send_image.dir/src/bsp/door.c.o -MF CMakeFiles/test_tcp_send_image.dir/src/bsp/door.c.o.d -o CMakeFiles/test_tcp_send_image.dir/src/bsp/door.c.o -c /home/dyj/linux_project/SmartAccessTerminal/src/bsp/door.c
 
 CMakeFiles/test_tcp_send_image.dir/src/bsp/door.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/test_tcp_send_image.dir/src/bsp/door.c.i"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/bsp/door.c > CMakeFiles/test_tcp_send_image.dir/src/bsp/door.c.i
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/dyj/linux_project/SmartAccessTerminal/src/bsp/door.c > CMakeFiles/test_tcp_send_image.dir/src/bsp/door.c.i
 
 CMakeFiles/test_tcp_send_image.dir/src/bsp/door.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/test_tcp_send_image.dir/src/bsp/door.c.s"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/bsp/door.c -o CMakeFiles/test_tcp_send_image.dir/src/bsp/door.c.s
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/dyj/linux_project/SmartAccessTerminal/src/bsp/door.c -o CMakeFiles/test_tcp_send_image.dir/src/bsp/door.c.s
 
 CMakeFiles/test_tcp_send_image.dir/src/bsp/alarm.c.o: CMakeFiles/test_tcp_send_image.dir/flags.make
-CMakeFiles/test_tcp_send_image.dir/src/bsp/alarm.c.o: /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/bsp/alarm.c
+CMakeFiles/test_tcp_send_image.dir/src/bsp/alarm.c.o: /home/dyj/linux_project/SmartAccessTerminal/src/bsp/alarm.c
 CMakeFiles/test_tcp_send_image.dir/src/bsp/alarm.c.o: CMakeFiles/test_tcp_send_image.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/build_pc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/test_tcp_send_image.dir/src/bsp/alarm.c.o"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_tcp_send_image.dir/src/bsp/alarm.c.o -MF CMakeFiles/test_tcp_send_image.dir/src/bsp/alarm.c.o.d -o CMakeFiles/test_tcp_send_image.dir/src/bsp/alarm.c.o -c /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/bsp/alarm.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/dyj/linux_project/SmartAccessTerminal/build_pc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/test_tcp_send_image.dir/src/bsp/alarm.c.o"
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_tcp_send_image.dir/src/bsp/alarm.c.o -MF CMakeFiles/test_tcp_send_image.dir/src/bsp/alarm.c.o.d -o CMakeFiles/test_tcp_send_image.dir/src/bsp/alarm.c.o -c /home/dyj/linux_project/SmartAccessTerminal/src/bsp/alarm.c
 
 CMakeFiles/test_tcp_send_image.dir/src/bsp/alarm.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/test_tcp_send_image.dir/src/bsp/alarm.c.i"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/bsp/alarm.c > CMakeFiles/test_tcp_send_image.dir/src/bsp/alarm.c.i
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/dyj/linux_project/SmartAccessTerminal/src/bsp/alarm.c > CMakeFiles/test_tcp_send_image.dir/src/bsp/alarm.c.i
 
 CMakeFiles/test_tcp_send_image.dir/src/bsp/alarm.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/test_tcp_send_image.dir/src/bsp/alarm.c.s"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/src/bsp/alarm.c -o CMakeFiles/test_tcp_send_image.dir/src/bsp/alarm.c.s
+	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/dyj/linux_project/SmartAccessTerminal/src/bsp/alarm.c -o CMakeFiles/test_tcp_send_image.dir/src/bsp/alarm.c.s
 
 # Object files for target test_tcp_send_image
 test_tcp_send_image_OBJECTS = \
@@ -241,7 +241,7 @@ test_tcp_send_image: CMakeFiles/test_tcp_send_image.dir/src/bsp/alarm.c.o
 test_tcp_send_image: CMakeFiles/test_tcp_send_image.dir/build.make
 test_tcp_send_image: CMakeFiles/test_tcp_send_image.dir/compiler_depend.ts
 test_tcp_send_image: CMakeFiles/test_tcp_send_image.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/build_pc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking C executable test_tcp_send_image"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/dyj/linux_project/SmartAccessTerminal/build_pc/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking C executable test_tcp_send_image"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/test_tcp_send_image.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -253,6 +253,6 @@ CMakeFiles/test_tcp_send_image.dir/clean:
 .PHONY : CMakeFiles/test_tcp_send_image.dir/clean
 
 CMakeFiles/test_tcp_send_image.dir/depend:
-	cd /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/build_pc && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/build_pc /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/build_pc /home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/build_pc/CMakeFiles/test_tcp_send_image.dir/DependInfo.cmake "--color=$(COLOR)" test_tcp_send_image
+	cd /home/dyj/linux_project/SmartAccessTerminal/build_pc && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/dyj/linux_project/SmartAccessTerminal /home/dyj/linux_project/SmartAccessTerminal /home/dyj/linux_project/SmartAccessTerminal/build_pc /home/dyj/linux_project/SmartAccessTerminal/build_pc /home/dyj/linux_project/SmartAccessTerminal/build_pc/CMakeFiles/test_tcp_send_image.dir/DependInfo.cmake "--color=$(COLOR)" test_tcp_send_image
 .PHONY : CMakeFiles/test_tcp_send_image.dir/depend
 

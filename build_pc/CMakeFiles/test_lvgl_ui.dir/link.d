@@ -1,0 +1,817 @@
+test_lvgl_ui: \
+  /usr/lib/gcc/aarch64-linux-gnu/15/../../../aarch64-linux-gnu/Scrt1.o \
+  /usr/lib/gcc/aarch64-linux-gnu/15/../../../aarch64-linux-gnu/crti.o \
+  /usr/lib/gcc/aarch64-linux-gnu/15/crtbeginS.o \
+  CMakeFiles/test_lvgl_ui.dir/tests/test_lvgl_ui.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/ui/ui_main.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_disp.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_event.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_group.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_indev.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_indev_scroll.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_obj.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_obj_class.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_obj_draw.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_obj_pos.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_obj_scroll.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_obj_style.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_obj_style_gen.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_obj_tree.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_refr.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_theme.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/arm2d/lv_gpu_arm2d.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/lv_draw.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/lv_draw_arc.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/lv_draw_img.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/lv_draw_label.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/lv_draw_layer.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/lv_draw_line.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/lv_draw_mask.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/lv_draw_rect.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/lv_draw_transform.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/lv_draw_triangle.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/lv_img_buf.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/lv_img_cache.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/lv_img_decoder.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/nxp/pxp/lv_draw_pxp.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/nxp/pxp/lv_draw_pxp_blend.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/nxp/pxp/lv_gpu_nxp_pxp.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/nxp/pxp/lv_gpu_nxp_pxp_osa.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/nxp/vglite/lv_draw_vglite.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/nxp/vglite/lv_draw_vglite_blend.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/nxp/vglite/lv_draw_vglite_line.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/nxp/vglite/lv_draw_vglite_rect.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/nxp/vglite/lv_vglite_buf.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/nxp/vglite/lv_vglite_utils.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/renesas/lv_gpu_d2_draw_label.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/renesas/lv_gpu_d2_ra6m3.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl_arc.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl_bg.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl_composite.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl_img.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl_label.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl_layer.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl_line.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl_mask.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl_polygon.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl_rect.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl_stack_blur.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl_texture_cache.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl_utils.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/stm32_dma2d/lv_gpu_stm32_dma2d.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sw/lv_draw_sw.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sw/lv_draw_sw_arc.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sw/lv_draw_sw_blend.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sw/lv_draw_sw_dither.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sw/lv_draw_sw_gradient.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sw/lv_draw_sw_img.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sw/lv_draw_sw_layer.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sw/lv_draw_sw_letter.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sw/lv_draw_sw_line.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sw/lv_draw_sw_polygon.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sw/lv_draw_sw_rect.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sw/lv_draw_sw_transform.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/swm341_dma2d/lv_gpu_swm341_dma2d.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/layouts/flex/lv_flex.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/layouts/grid/lv_grid.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/bmp/lv_bmp.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/ffmpeg/lv_ffmpeg.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/freetype/lv_freetype.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/fsdrv/lv_fs_fatfs.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/fsdrv/lv_fs_littlefs.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/fsdrv/lv_fs_posix.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/fsdrv/lv_fs_stdio.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/fsdrv/lv_fs_win32.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/gif/gifdec.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/gif/lv_gif.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/png/lodepng.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/png/lv_png.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/qrcode/lv_qrcode.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/qrcode/qrcodegen.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/rlottie/lv_rlottie.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/sjpg/lv_sjpg.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/sjpg/tjpgd.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/tiny_ttf/lv_tiny_ttf.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/lv_extra.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/others/fragment/lv_fragment.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/others/fragment/lv_fragment_manager.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/others/gridnav/lv_gridnav.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/others/ime/lv_ime_pinyin.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/others/imgfont/lv_imgfont.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/others/monkey/lv_monkey.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/others/msg/lv_msg.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/others/snapshot/lv_snapshot.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/themes/basic/lv_theme_basic.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/themes/default/lv_theme_default.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/themes/mono/lv_theme_mono.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/animimg/lv_animimg.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/calendar/lv_calendar.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/calendar/lv_calendar_header_arrow.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/calendar/lv_calendar_header_dropdown.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/chart/lv_chart.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/colorwheel/lv_colorwheel.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/imgbtn/lv_imgbtn.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/keyboard/lv_keyboard.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/led/lv_led.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/list/lv_list.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/menu/lv_menu.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/meter/lv_meter.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/msgbox/lv_msgbox.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/span/lv_span.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/spinbox/lv_spinbox.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/spinner/lv_spinner.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/tabview/lv_tabview.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/tileview/lv_tileview.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/win/lv_win.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_dejavu_16_persian_hebrew.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_fmt_txt.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_loader.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_10.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_12.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_12_subpx.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_14.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_16.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_18.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_20.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_22.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_24.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_26.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_28.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_28_compressed.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_30.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_32.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_34.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_36.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_38.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_40.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_42.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_44.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_46.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_48.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_8.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_simsun_16_cjk.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_unscii_16.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_unscii_8.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/hal/lv_hal_disp.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/hal/lv_hal_indev.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/hal/lv_hal_tick.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_anim.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_anim_timeline.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_area.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_async.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_bidi.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_color.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_fs.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_gc.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_ll.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_log.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_lru.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_math.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_mem.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_printf.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_style.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_style_gen.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_templ.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_timer.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_tlsf.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_txt.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_txt_ap.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_utils.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_arc.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_bar.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_btn.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_btnmatrix.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_canvas.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_checkbox.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_dropdown.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_img.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_label.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_line.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_objx_templ.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_roller.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_slider.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_switch.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_table.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_textarea.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lv_drivers/indev/AD_touch.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lv_drivers/indev/FT5406EE8.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lv_drivers/indev/XPT2046.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lv_drivers/indev/evdev.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lv_drivers/indev/libinput.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lv_drivers/indev/xkb.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lv_drivers/sdl/sdl.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lv_drivers/sdl/sdl_common.c.o \
+  CMakeFiles/test_lvgl_ui.dir/src/third_party/lv_drivers/sdl/sdl_gpu.c.o \
+  /usr/lib/aarch64-linux-gnu/libSDL2.so \
+  /usr/lib/gcc/aarch64-linux-gnu/15/../../../aarch64-linux-gnu/libm.so \
+  /usr/lib/gcc/aarch64-linux-gnu/15/../../../aarch64-linux-gnu/libm.so \
+  /usr/lib/gcc/aarch64-linux-gnu/15/../../../aarch64-linux-gnu/libm.so \
+  /usr/lib/aarch64-linux-gnu/libm.so.6 \
+  /usr/lib/aarch64-linux-gnu/libmvec.so.1 \
+  /usr/lib/gcc/aarch64-linux-gnu/15/../../../aarch64-linux-gnu/libpthread.a \
+  /usr/lib/gcc/aarch64-linux-gnu/15/libgcc.a \
+  /usr/lib/gcc/aarch64-linux-gnu/15/libgcc_s.so \
+  /usr/lib/gcc/aarch64-linux-gnu/15/libgcc_s.so \
+  /usr/lib/gcc/aarch64-linux-gnu/15/libgcc_s.so \
+  /usr/lib/gcc/aarch64-linux-gnu/15/../../../aarch64-linux-gnu/libgcc_s.so.1 \
+  /usr/lib/gcc/aarch64-linux-gnu/15/libgcc.a \
+  /usr/lib/gcc/aarch64-linux-gnu/15/../../../aarch64-linux-gnu/libc.so \
+  /usr/lib/gcc/aarch64-linux-gnu/15/../../../aarch64-linux-gnu/libc.so \
+  /usr/lib/gcc/aarch64-linux-gnu/15/../../../aarch64-linux-gnu/libc.so \
+  /usr/lib/aarch64-linux-gnu/libc.so.6 \
+  /usr/lib/aarch64-linux-gnu/libc_nonshared.a \
+  /lib/ld-linux-aarch64.so.1 \
+  /usr/lib/gcc/aarch64-linux-gnu/15/libgcc.a \
+  /usr/lib/gcc/aarch64-linux-gnu/15/libgcc_s.so \
+  /usr/lib/gcc/aarch64-linux-gnu/15/libgcc_s.so \
+  /usr/lib/gcc/aarch64-linux-gnu/15/libgcc_s.so \
+  /usr/lib/gcc/aarch64-linux-gnu/15/../../../aarch64-linux-gnu/libgcc_s.so.1 \
+  /usr/lib/gcc/aarch64-linux-gnu/15/libgcc.a \
+  /usr/lib/gcc/aarch64-linux-gnu/15/crtendS.o \
+  /usr/lib/gcc/aarch64-linux-gnu/15/../../../aarch64-linux-gnu/crtn.o \
+  /usr/lib/aarch64-linux-gnu/libasound.so.2 \
+  /usr/lib/aarch64-linux-gnu/libpulse.so.0 \
+  /usr/lib/aarch64-linux-gnu/libsamplerate.so.0 \
+  /usr/lib/aarch64-linux-gnu/libX11.so.6 \
+  /usr/lib/aarch64-linux-gnu/libXext.so.6 \
+  /usr/lib/aarch64-linux-gnu/libXcursor.so.1 \
+  /usr/lib/aarch64-linux-gnu/libXi.so.6 \
+  /usr/lib/aarch64-linux-gnu/libXfixes.so.3 \
+  /usr/lib/aarch64-linux-gnu/libXrandr.so.2 \
+  /usr/lib/aarch64-linux-gnu/libXss.so.1 \
+  /usr/lib/aarch64-linux-gnu/libdrm.so.2 \
+  /usr/lib/aarch64-linux-gnu/libgbm.so.1 \
+  /usr/lib/aarch64-linux-gnu/libwayland-egl.so.1 \
+  /usr/lib/aarch64-linux-gnu/libwayland-client.so.0 \
+  /usr/lib/aarch64-linux-gnu/libm.so.6 \
+  /usr/lib/aarch64-linux-gnu/libwayland-cursor.so.0 \
+  /usr/lib/aarch64-linux-gnu/libxkbcommon.so.0 \
+  /usr/lib/aarch64-linux-gnu/libdecor-0.so.0 \
+  /usr/lib/aarch64-linux-gnu/pulseaudio/libpulsecommon-17.0.so \
+  /usr/lib/aarch64-linux-gnu/libdbus-1.so.3 \
+  /usr/lib/aarch64-linux-gnu/libxcb.so.1 \
+  /usr/lib/aarch64-linux-gnu/libXrender.so.1 \
+  /usr/lib/aarch64-linux-gnu/libexpat.so.1 \
+  /usr/lib/aarch64-linux-gnu/libffi.so.8 \
+  /usr/lib/aarch64-linux-gnu/libsndfile.so.1 \
+  /usr/lib/aarch64-linux-gnu/libX11-xcb.so.1 \
+  /usr/lib/aarch64-linux-gnu/libsystemd.so.0 \
+  /usr/lib/aarch64-linux-gnu/libasyncns.so.0 \
+  /usr/lib/aarch64-linux-gnu/libapparmor.so.1 \
+  /usr/lib/aarch64-linux-gnu/libXau.so.6 \
+  /usr/lib/aarch64-linux-gnu/libXdmcp.so.6 \
+  /usr/lib/aarch64-linux-gnu/libFLAC.so.14 \
+  /usr/lib/aarch64-linux-gnu/libvorbis.so.0 \
+  /usr/lib/aarch64-linux-gnu/libvorbisenc.so.2 \
+  /usr/lib/aarch64-linux-gnu/libopus.so.0 \
+  /usr/lib/aarch64-linux-gnu/libogg.so.0 \
+  /usr/lib/aarch64-linux-gnu/libmpg123.so.0 \
+  /usr/lib/aarch64-linux-gnu/libmp3lame.so.0 \
+  /usr/lib/aarch64-linux-gnu/libmvec.so.1
+
+/usr/lib/gcc/aarch64-linux-gnu/15/../../../aarch64-linux-gnu/Scrt1.o:
+
+/usr/lib/gcc/aarch64-linux-gnu/15/../../../aarch64-linux-gnu/crti.o:
+
+/usr/lib/gcc/aarch64-linux-gnu/15/crtbeginS.o:
+
+CMakeFiles/test_lvgl_ui.dir/tests/test_lvgl_ui.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/ui/ui_main.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_disp.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_event.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_group.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_indev.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_indev_scroll.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_obj.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_obj_class.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_obj_draw.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_obj_pos.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_obj_scroll.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_obj_style.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_obj_style_gen.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_obj_tree.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_refr.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/core/lv_theme.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/arm2d/lv_gpu_arm2d.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/lv_draw.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/lv_draw_arc.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/lv_draw_img.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/lv_draw_label.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/lv_draw_layer.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/lv_draw_line.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/lv_draw_mask.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/lv_draw_rect.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/lv_draw_transform.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/lv_draw_triangle.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/lv_img_buf.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/lv_img_cache.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/lv_img_decoder.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/nxp/pxp/lv_draw_pxp.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/nxp/pxp/lv_draw_pxp_blend.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/nxp/pxp/lv_gpu_nxp_pxp.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/nxp/pxp/lv_gpu_nxp_pxp_osa.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/nxp/vglite/lv_draw_vglite.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/nxp/vglite/lv_draw_vglite_blend.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/nxp/vglite/lv_draw_vglite_line.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/nxp/vglite/lv_draw_vglite_rect.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/nxp/vglite/lv_vglite_buf.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/nxp/vglite/lv_vglite_utils.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/renesas/lv_gpu_d2_draw_label.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/renesas/lv_gpu_d2_ra6m3.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl_arc.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl_bg.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl_composite.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl_img.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl_label.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl_layer.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl_line.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl_mask.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl_polygon.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl_rect.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl_stack_blur.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl_texture_cache.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sdl/lv_draw_sdl_utils.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/stm32_dma2d/lv_gpu_stm32_dma2d.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sw/lv_draw_sw.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sw/lv_draw_sw_arc.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sw/lv_draw_sw_blend.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sw/lv_draw_sw_dither.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sw/lv_draw_sw_gradient.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sw/lv_draw_sw_img.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sw/lv_draw_sw_layer.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sw/lv_draw_sw_letter.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sw/lv_draw_sw_line.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sw/lv_draw_sw_polygon.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sw/lv_draw_sw_rect.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/sw/lv_draw_sw_transform.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/draw/swm341_dma2d/lv_gpu_swm341_dma2d.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/layouts/flex/lv_flex.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/layouts/grid/lv_grid.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/bmp/lv_bmp.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/ffmpeg/lv_ffmpeg.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/freetype/lv_freetype.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/fsdrv/lv_fs_fatfs.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/fsdrv/lv_fs_littlefs.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/fsdrv/lv_fs_posix.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/fsdrv/lv_fs_stdio.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/fsdrv/lv_fs_win32.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/gif/gifdec.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/gif/lv_gif.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/png/lodepng.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/png/lv_png.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/qrcode/lv_qrcode.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/qrcode/qrcodegen.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/rlottie/lv_rlottie.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/sjpg/lv_sjpg.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/sjpg/tjpgd.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/libs/tiny_ttf/lv_tiny_ttf.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/lv_extra.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/others/fragment/lv_fragment.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/others/fragment/lv_fragment_manager.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/others/gridnav/lv_gridnav.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/others/ime/lv_ime_pinyin.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/others/imgfont/lv_imgfont.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/others/monkey/lv_monkey.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/others/msg/lv_msg.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/others/snapshot/lv_snapshot.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/themes/basic/lv_theme_basic.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/themes/default/lv_theme_default.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/themes/mono/lv_theme_mono.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/animimg/lv_animimg.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/calendar/lv_calendar.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/calendar/lv_calendar_header_arrow.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/calendar/lv_calendar_header_dropdown.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/chart/lv_chart.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/colorwheel/lv_colorwheel.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/imgbtn/lv_imgbtn.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/keyboard/lv_keyboard.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/led/lv_led.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/list/lv_list.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/menu/lv_menu.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/meter/lv_meter.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/msgbox/lv_msgbox.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/span/lv_span.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/spinbox/lv_spinbox.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/spinner/lv_spinner.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/tabview/lv_tabview.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/tileview/lv_tileview.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/extra/widgets/win/lv_win.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_dejavu_16_persian_hebrew.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_fmt_txt.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_loader.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_10.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_12.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_12_subpx.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_14.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_16.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_18.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_20.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_22.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_24.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_26.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_28.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_28_compressed.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_30.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_32.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_34.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_36.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_38.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_40.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_42.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_44.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_46.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_48.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_montserrat_8.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_simsun_16_cjk.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_unscii_16.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/font/lv_font_unscii_8.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/hal/lv_hal_disp.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/hal/lv_hal_indev.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/hal/lv_hal_tick.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_anim.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_anim_timeline.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_area.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_async.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_bidi.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_color.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_fs.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_gc.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_ll.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_log.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_lru.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_math.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_mem.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_printf.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_style.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_style_gen.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_templ.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_timer.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_tlsf.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_txt.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_txt_ap.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/misc/lv_utils.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_arc.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_bar.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_btn.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_btnmatrix.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_canvas.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_checkbox.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_dropdown.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_img.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_label.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_line.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_objx_templ.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_roller.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_slider.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_switch.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_table.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lvgl/src/widgets/lv_textarea.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lv_drivers/indev/AD_touch.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lv_drivers/indev/FT5406EE8.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lv_drivers/indev/XPT2046.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lv_drivers/indev/evdev.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lv_drivers/indev/libinput.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lv_drivers/indev/xkb.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lv_drivers/sdl/sdl.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lv_drivers/sdl/sdl_common.c.o:
+
+CMakeFiles/test_lvgl_ui.dir/src/third_party/lv_drivers/sdl/sdl_gpu.c.o:
+
+/usr/lib/aarch64-linux-gnu/libSDL2.so:
+
+/usr/lib/gcc/aarch64-linux-gnu/15/../../../aarch64-linux-gnu/libm.so:
+
+/usr/lib/gcc/aarch64-linux-gnu/15/../../../aarch64-linux-gnu/libm.so:
+
+/usr/lib/gcc/aarch64-linux-gnu/15/../../../aarch64-linux-gnu/libm.so:
+
+/usr/lib/aarch64-linux-gnu/libm.so.6:
+
+/usr/lib/aarch64-linux-gnu/libmvec.so.1:
+
+/usr/lib/gcc/aarch64-linux-gnu/15/../../../aarch64-linux-gnu/libpthread.a:
+
+/usr/lib/gcc/aarch64-linux-gnu/15/libgcc.a:
+
+/usr/lib/gcc/aarch64-linux-gnu/15/libgcc_s.so:
+
+/usr/lib/gcc/aarch64-linux-gnu/15/libgcc_s.so:
+
+/usr/lib/gcc/aarch64-linux-gnu/15/libgcc_s.so:
+
+/usr/lib/gcc/aarch64-linux-gnu/15/../../../aarch64-linux-gnu/libgcc_s.so.1:
+
+/usr/lib/gcc/aarch64-linux-gnu/15/libgcc.a:
+
+/usr/lib/gcc/aarch64-linux-gnu/15/../../../aarch64-linux-gnu/libc.so:
+
+/usr/lib/gcc/aarch64-linux-gnu/15/../../../aarch64-linux-gnu/libc.so:
+
+/usr/lib/gcc/aarch64-linux-gnu/15/../../../aarch64-linux-gnu/libc.so:
+
+/usr/lib/aarch64-linux-gnu/libc.so.6:
+
+/usr/lib/aarch64-linux-gnu/libc_nonshared.a:
+
+/lib/ld-linux-aarch64.so.1:
+
+/usr/lib/gcc/aarch64-linux-gnu/15/libgcc.a:
+
+/usr/lib/gcc/aarch64-linux-gnu/15/libgcc_s.so:
+
+/usr/lib/gcc/aarch64-linux-gnu/15/libgcc_s.so:
+
+/usr/lib/gcc/aarch64-linux-gnu/15/libgcc_s.so:
+
+/usr/lib/gcc/aarch64-linux-gnu/15/../../../aarch64-linux-gnu/libgcc_s.so.1:
+
+/usr/lib/gcc/aarch64-linux-gnu/15/libgcc.a:
+
+/usr/lib/gcc/aarch64-linux-gnu/15/crtendS.o:
+
+/usr/lib/gcc/aarch64-linux-gnu/15/../../../aarch64-linux-gnu/crtn.o:
+
+/usr/lib/aarch64-linux-gnu/libasound.so.2:
+
+/usr/lib/aarch64-linux-gnu/libpulse.so.0:
+
+/usr/lib/aarch64-linux-gnu/libsamplerate.so.0:
+
+/usr/lib/aarch64-linux-gnu/libX11.so.6:
+
+/usr/lib/aarch64-linux-gnu/libXext.so.6:
+
+/usr/lib/aarch64-linux-gnu/libXcursor.so.1:
+
+/usr/lib/aarch64-linux-gnu/libXi.so.6:
+
+/usr/lib/aarch64-linux-gnu/libXfixes.so.3:
+
+/usr/lib/aarch64-linux-gnu/libXrandr.so.2:
+
+/usr/lib/aarch64-linux-gnu/libXss.so.1:
+
+/usr/lib/aarch64-linux-gnu/libdrm.so.2:
+
+/usr/lib/aarch64-linux-gnu/libgbm.so.1:
+
+/usr/lib/aarch64-linux-gnu/libwayland-egl.so.1:
+
+/usr/lib/aarch64-linux-gnu/libwayland-client.so.0:
+
+/usr/lib/aarch64-linux-gnu/libm.so.6:
+
+/usr/lib/aarch64-linux-gnu/libwayland-cursor.so.0:
+
+/usr/lib/aarch64-linux-gnu/libxkbcommon.so.0:
+
+/usr/lib/aarch64-linux-gnu/libdecor-0.so.0:
+
+/usr/lib/aarch64-linux-gnu/pulseaudio/libpulsecommon-17.0.so:
+
+/usr/lib/aarch64-linux-gnu/libdbus-1.so.3:
+
+/usr/lib/aarch64-linux-gnu/libxcb.so.1:
+
+/usr/lib/aarch64-linux-gnu/libXrender.so.1:
+
+/usr/lib/aarch64-linux-gnu/libexpat.so.1:
+
+/usr/lib/aarch64-linux-gnu/libffi.so.8:
+
+/usr/lib/aarch64-linux-gnu/libsndfile.so.1:
+
+/usr/lib/aarch64-linux-gnu/libX11-xcb.so.1:
+
+/usr/lib/aarch64-linux-gnu/libsystemd.so.0:
+
+/usr/lib/aarch64-linux-gnu/libasyncns.so.0:
+
+/usr/lib/aarch64-linux-gnu/libapparmor.so.1:
+
+/usr/lib/aarch64-linux-gnu/libXau.so.6:
+
+/usr/lib/aarch64-linux-gnu/libXdmcp.so.6:
+
+/usr/lib/aarch64-linux-gnu/libFLAC.so.14:
+
+/usr/lib/aarch64-linux-gnu/libvorbis.so.0:
+
+/usr/lib/aarch64-linux-gnu/libvorbisenc.so.2:
+
+/usr/lib/aarch64-linux-gnu/libopus.so.0:
+
+/usr/lib/aarch64-linux-gnu/libogg.so.0:
+
+/usr/lib/aarch64-linux-gnu/libmpg123.so.0:
+
+/usr/lib/aarch64-linux-gnu/libmp3lame.so.0:
+
+/usr/lib/aarch64-linux-gnu/libmvec.so.1:

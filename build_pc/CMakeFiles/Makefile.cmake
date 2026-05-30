@@ -7,7 +7,7 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
-  "/home/dyj/linux_project/SmartAccessProject/SmartAccessTerminal/CMakeLists.txt"
+  "/home/dyj/linux_project/SmartAccessTerminal/CMakeLists.txt"
   "CMakeFiles/4.2.3/CMakeCCompiler.cmake"
   "CMakeFiles/4.2.3/CMakeSystem.cmake"
   "/usr/lib/aarch64-linux-gnu/cmake/SDL2/sdl2-config-version.cmake"
