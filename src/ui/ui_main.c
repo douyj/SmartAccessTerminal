@@ -1,3 +1,14 @@
+/**
+ * @file    ui/ui_main.c
+ * @brief   人脸识别门禁 LVGL 分层界面实现
+ * @details 采用视频底层层 + 悬浮叠加层双层架构，实现相机画面模拟、顶部状态栏、
+ *          中心状态提示、底部识别结果卡片、延时自动隐藏等功能；
+ *          对接应用全局状态，完成业务状态到 UI 界面的自动刷新
+ * @author  Deng Yangjie
+ * @date    2026-05-31
+ * @version V1.0
+ * @note    界面分辨率 480*800，结果卡片依靠 LVGL 定时器实现延时自动隐藏
+ */
 #include "ui/ui_main.h"
 
 #include "lvgl/lvgl.h"
@@ -5,40 +16,48 @@
 #include <stdio.h>
 #include <string.h>
 
-#define COLOR_BG        0x06111F
-#define COLOR_PANEL     0x102033
-#define COLOR_BLUE      0x1E90FF
-#define COLOR_CYAN      0x00D1FF
-#define COLOR_GREEN     0x20E070
-#define COLOR_RED       0xFF4D4D
-#define COLOR_YELLOW    0xFFD166
-#define COLOR_WHITE     0xFFFFFF
-#define COLOR_GRAY      0xA8B3C2
+#define COLOR_BG        0x06111F      /**< 全局背景色 */
+#define COLOR_PANEL     0x102033      /**< 结果面板底色 */
+#define COLOR_BLUE      0x1E90FF      /**< 蓝色(上传/边框) */
+#define COLOR_CYAN      0x00D1FF      /**< 青色(待机/抓拍) */
+#define COLOR_GREEN     0x20E070      /**< 绿色(成功/正常) */
+#define COLOR_RED       0xFF4D4D      /**< 红色(拒绝/错误) */
+#define COLOR_YELLOW    0xFFD166      /**< 黄色(警告/未检测人脸) */
+#define COLOR_WHITE     0xFFFFFF      /**< 主文本白色 */
+#define COLOR_GRAY      0xA8B3C2      /**< 次要文本灰色 */
 
-static lv_obj_t *g_video_layer = NULL;
-static lv_obj_t *g_overlay_layer = NULL;
+static lv_obj_t *g_video_layer = NULL;  /**< 视频底层：模拟相机画面 */
+static lv_obj_t *g_overlay_layer = NULL;    /**< 悬浮叠加层：放置所有UI控件 */
 
+//UI_TOP_BAR 顶部状态栏控件
 static lv_obj_t *g_label_time = NULL;
 static lv_obj_t *g_label_wifi = NULL;
 static lv_obj_t *g_label_tcp = NULL;
 
-static lv_obj_t *g_label_status = NULL;
+static lv_obj_t *g_label_status = NULL;     /**< 屏幕中心运行状态文字 */
 
-static lv_obj_t *g_result_card = NULL;
+//UI_RESULT_CARD 底部识别结果卡片控件
+static lv_obj_t *g_result_card    = NULL;  /**< 结果卡片总容器 */
+static lv_obj_t *g_face_thumb      = NULL;  /**< 人脸缩略图容器 */
+static lv_obj_t *g_face_thumb_label = NULL;/**< 缩略图内文字标签 */
 
-static lv_obj_t *g_face_thumb = NULL;
-static lv_obj_t *g_face_thumb_label = NULL;
+static lv_obj_t *g_text_group      = NULL;  /**< 右侧文本分组容器 */
+static lv_obj_t *g_label_title    = NULL;  /**< 结果标题 */
+static lv_obj_t *g_label_name     = NULL;  /**< 人员姓名 */
+static lv_obj_t *g_label_desc     = NULL;  /**< 置信度/描述文本 */
 
-static lv_obj_t *g_text_group = NULL;
-static lv_obj_t *g_label_title = NULL;
-static lv_obj_t *g_label_name = NULL;
-static lv_obj_t *g_label_desc = NULL;
 
 static lv_obj_t *g_action_pill = NULL;
 static lv_obj_t *g_label_action = NULL;
 
 static lv_timer_t *g_hide_card_timer = NULL;
 
+/**
+ * @brief       设置标签文本颜色
+ * @param[in]   obj     LVGL标签控件句柄
+ * @param[in]   color   十六进制RGB颜色值
+ * @retval      无
+ */
 
 static void set_text_color(lv_obj_t *obj, unsigned int color)
 {
@@ -47,6 +66,16 @@ static void set_text_color(lv_obj_t *obj, unsigned int color)
     }
 }
 
+/**
+ * @brief       快速创建文本标签工具函数
+ * @param[in]   parent  父容器句柄
+ * @param[in]   text    显示文本
+ * @param[in]   x       X坐标
+ * @param[in]   y       Y坐标
+ * @param[in]   color   文本颜色
+ * @param[in]   font    字体句柄，传NULL使用默认字体
+ * @retval      lv_obj_t* 新建标签句柄
+ */
 
 static lv_obj_t *make_label(lv_obj_t *parent,
                             const char *text,
@@ -71,6 +100,12 @@ static lv_obj_t *make_label(lv_obj_t *parent,
 void ui_hide_result_card(void);
 
 
+/**
+ * @brief       卡片自动隐藏定时器回调
+ * @param[in]   timer   定时器句柄
+ * @retval      无
+ * @note        执行隐藏并销毁定时器
+ */
 static void hide_card_timer_cb(lv_timer_t *timer)
 {
     (void)timer;
@@ -83,7 +118,12 @@ static void hide_card_timer_cb(lv_timer_t *timer)
     }
 }
 
-
+/**
+ * @brief       显示结果卡片并启动延时自动隐藏
+ * @param[in]   ms  卡片显示时长(毫秒)
+ * @retval      无
+ * @note        若已有运行中的定时器，先销毁再新建
+ */
 static void show_result_card_for_ms(unsigned int ms)
 {
     if (!g_result_card) {
@@ -101,7 +141,12 @@ static void show_result_card_for_ms(unsigned int ms)
     lv_timer_set_repeat_count(g_hide_card_timer, 1);
 }
 
-
+/**
+ * @brief       创建视频底层容器
+ * @param[in]   scr  主屏幕句柄
+ * @retval      无
+ * @note        当前使用纯色背景模拟相机画面，后续可替换为 lv_img 显示RGB565图像
+ */
 static void create_video_layer(lv_obj_t *scr)
 {
     /*
@@ -556,4 +601,77 @@ void ui_hide_result_card(void)
         lv_label_set_text(g_label_status, "AI SCANNING");
         set_text_color(g_label_status, COLOR_CYAN);
     }
+}
+
+static UiState app_status_to_ui_state(AppStatus status)
+{
+    switch (status) {
+    case APP_STATUS_IDLE:
+        return UI_STATE_IDLE;
+    case APP_STATUS_CAPTURING:
+        return UI_STATE_CAPTURING;
+    case APP_STATUS_UPLOADING:
+        return UI_STATE_UPLOADING;
+    case APP_STATUS_VERIFYING:
+        return UI_STATE_VERIFYING;
+    case APP_STATUS_SUCCESS:
+        return UI_STATE_SUCCESS;
+    case APP_STATUS_DENY:
+        return UI_STATE_DENY;
+    case APP_STATUS_NO_FACE:
+        return UI_STATE_NO_FACE;
+    case APP_STATUS_ERROR:
+        return UI_STATE_ERROR;
+    default:
+        return UI_STATE_IDLE;
+    }
+}
+
+void ui_update_from_app_state(void)
+{
+    AppStateSnapshot snapshot;
+
+    app_state_get_snapshot(&snapshot);
+
+    /*
+     * 顶部状态栏每次都可以刷新。
+     * 这里时间暂时写死，后面可以接 RTC / time(NULL)。
+     */
+    ui_set_top_info("23:13", snapshot.wifi_ok, snapshot.tcp_online);
+
+    /*
+     * 如果有新的识别结果，弹出结果卡片。
+     */
+    if (snapshot.result_updated) {
+        switch (snapshot.result) {
+        case APP_RESULT_ALLOW:
+            ui_show_success(snapshot.name, snapshot.confidence, 3);
+            break;
+
+        case APP_RESULT_DENY:
+            ui_show_deny(snapshot.name, snapshot.confidence);
+            break;
+
+        case APP_RESULT_NO_FACE:
+            ui_show_no_face();
+            break;
+
+        case APP_RESULT_ERROR:
+            ui_show_error(snapshot.message);
+            break;
+
+        case APP_RESULT_NONE:
+        default:
+            break;
+        }
+
+        app_state_clear_result_updated();
+        return;
+    }
+
+    /*
+     * 没有新结果时，只同步过程状态。
+     * 不会弹出结果卡片。
+     */
+    ui_set_state(app_status_to_ui_state(snapshot.status));
 }

@@ -56,6 +56,21 @@ if(BUILD_LVGL_UI_TEST)
         ${PROJECT_SOURCE_DIR}/src/third_party/lv_drivers/indev/*.c
     )
 
+    set(LVGL_COMMON_INCLUDES
+        ${PROJECT_SOURCE_DIR}
+        ${PROJECT_SOURCE_DIR}/include
+        ${PROJECT_SOURCE_DIR}/src/third_party
+        ${PROJECT_SOURCE_DIR}/src/third_party/lvgl
+        ${PROJECT_SOURCE_DIR}/src/third_party/lv_drivers
+        ${SDL2_INCLUDE_DIRS}
+    )
+
+    set(LVGL_COMMON_DEFINES
+        USE_SDL=1
+        LV_CONF_INCLUDE_SIMPLE
+        LV_DRV_CONF_INCLUDE_SIMPLE
+    )
+
     add_executable(test_lvgl_ui
         tests/test_lvgl_ui.c
         src/ui/ui_main.c
@@ -65,21 +80,38 @@ if(BUILD_LVGL_UI_TEST)
     )
 
     target_include_directories(test_lvgl_ui PRIVATE
-        ${PROJECT_SOURCE_DIR}
-        ${PROJECT_SOURCE_DIR}/include
-        ${PROJECT_SOURCE_DIR}/src/third_party
-        ${PROJECT_SOURCE_DIR}/src/third_party/lvgl
-        ${PROJECT_SOURCE_DIR}/src/third_party/lv_drivers
-        ${SDL2_INCLUDE_DIRS}
+        ${LVGL_COMMON_INCLUDES}
     )
 
     target_compile_definitions(test_lvgl_ui PRIVATE
-        USE_SDL=1
-        LV_CONF_INCLUDE_SIMPLE
-        LV_DRV_CONF_INCLUDE_SIMPLE
+        ${LVGL_COMMON_DEFINES}
     )
 
     target_link_libraries(test_lvgl_ui
+        ${SDL2_LIBRARIES}
+        m
+        pthread
+    )
+
+
+    add_executable(test_app_state_ui
+        tests/test_app_state_ui.c
+        src/ui/ui_main.c
+        src/app/app_state.c
+
+        ${LVGL_SOURCES}
+        ${LV_DRIVERS_SOURCES}
+    )
+
+    target_include_directories(test_app_state_ui PRIVATE
+        ${LVGL_COMMON_INCLUDES}
+    )
+
+    target_compile_definitions(test_app_state_ui PRIVATE
+        ${LVGL_COMMON_DEFINES}
+    )
+
+    target_link_libraries(test_app_state_ui
         ${SDL2_LIBRARIES}
         m
         pthread

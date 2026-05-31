@@ -1,6 +1,8 @@
 #ifndef UI_MAIN_H
 #define UI_MAIN_H
 
+#include "app/app_state.h"
+
 typedef enum {
     UI_STATE_IDLE = 0,
     UI_STATE_CAPTURING,
@@ -24,5 +26,10 @@ void ui_show_no_face(void);
 void ui_show_error(const char *msg);
 
 void ui_hide_result_card(void);
+
+/*
+ * UI 线程从 app_state 读取状态并刷新界面。
+ */
+void ui_update_from_app_state(void);
 
 #endif
