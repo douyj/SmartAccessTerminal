@@ -1,5 +1,0 @@
-/home/dyj/linux_project/SmartAccessTerminal/build_pc/CMakeFiles/smart_access_terminal.dir
-/home/dyj/linux_project/SmartAccessTerminal/build_pc/CMakeFiles/test_tcp_send_image.dir
-/home/dyj/linux_project/SmartAccessTerminal/build_pc/CMakeFiles/test_lvgl_ui.dir
-/home/dyj/linux_project/SmartAccessTerminal/build_pc/CMakeFiles/edit_cache.dir
-/home/dyj/linux_project/SmartAccessTerminal/build_pc/CMakeFiles/rebuild_cache.dir
