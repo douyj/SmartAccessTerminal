@@ -7,6 +7,7 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 
 include_directories(
     ${PROJECT_SOURCE_DIR}/include
+    ${PROJECT_SOURCE_DIR}/include/third_party
 )
 
 set(COMMON_SOURCES
@@ -22,9 +23,12 @@ set(COMMON_SOURCES
     src/network/packet.c
 
     src/protocol/access_protocol.c
-
     src/bsp/door.c
     src/bsp/alarm.c
+
+    src/app/app_state.c
+
+    src/third_party/cJSON.c
 )
 
 add_executable(smart_access_terminal
@@ -38,6 +42,19 @@ add_executable(test_tcp_send_image
     tests/test_tcp_send_image.c
 
     ${COMMON_SOURCES}
+)
+
+add_executable(test_v4l2_rgb565_capture
+    tests/test_v4l2_rgb565_capture.c
+)
+
+target_include_directories(test_v4l2_rgb565_capture PRIVATE
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_SOURCE_DIR}/include
+)
+
+target_link_libraries(test_v4l2_rgb565_capture
+    m
 )
 
 

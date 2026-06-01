@@ -1,7 +1,7 @@
 #include "network/packet.h"
 #include "network/tcp_client.h"
-#include "protocol/access_protocol.h"
 #include "common/log.h"
+#include "third_party/cJSON.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,129 +9,188 @@
 #include <stdint.h>
 #include <arpa/inet.h>
 
-/*获取路径中的文件名*/
-static const char *get_filename_from_path(const char *path)
+static int read_file_to_buffer(const char *path, unsigned char **out_buf, int *out_size)
 {
-    /*找到最后一个'/'*/
-    const char *p = strrchr(path, '/');
-    if(p == NULL)
-    {
-        return path;
-    }
+    FILE *fp = NULL;
+    long size = 0;
+    unsigned char *buf = NULL;
 
-    return p+1;
-}
-
-/*获取文件大小*/
-static int get_file_size(FILE *fp)
-{
-    /*把文件指针 移动到 文件的最后面*/
-    if(fseek(fp, 0, SEEK_END) != 0)
-    {
+    if (!path || !out_buf || !out_size) {
+        LOG_ERROR("read_file_to_buffer invalid args");
         return -1;
     }
 
-    long size = ftell(fp);
-    if(size < 0){
+    fp = fopen(path, "rb");
+    if (!fp) {
+        LOG_ERROR("open image failed: %s", path);
         return -1;
     }
 
-    rewind(fp);
-    return (int)size;
-}
-
-/**
- * @brief      通过TCP发送本地JPG图片至服务器
- * @param      sockfd       已建立连接的TCP套接字
- * @param      jpg_path     本地图片完整路径
- * @param      device_id    设备唯一标识ID，用于服务器区分设备
- * @return     成功返回0，失败返回-1
- * @details    发送协议格式：
- *             1. 4字节网络序JSON头长度
- *             2. JSON头部(包含设备ID、文件名、图片大小)
- *             3. JPG图片二进制原始数据
- * @note       依赖tcp_send_all实现可靠发送，内部自动申请/释放图片内存
- */
-int packet_send_image(int sockfd, const char *jpg_path, const char *device_id)
-{
-    FILE *fp = fopen(jpg_path, "rb");
-    if(fp == NULL)
-    {
-        LOG_ERROR("open image failed: %s", jpg_path);
-        return -1;
-    }
-
-    int image_size = get_file_size(fp);
-    if(image_size <= 0){
-         LOG_ERROR("invalid image size:%d", image_size);
-         fclose(fp);
-         return -1;
-    }
-
-    char *image_buf = (char *)malloc(image_size);
-    if(image_buf == NULL)
-    {
-        LOG_ERROR("malloc image buffer failed");
+    if (fseek(fp, 0, SEEK_END) != 0) {
         fclose(fp);
+        LOG_ERROR("fseek end failed: %s", path);
         return -1;
     }
 
-    int read_size = fread(image_buf, 1, image_size, fp);
+    size = ftell(fp);
+    if (size <= 0) {
+        fclose(fp);
+        LOG_ERROR("invalid image file size: %s", path);
+        return -1;
+    }
+
+    if (fseek(fp, 0, SEEK_SET) != 0) {
+        fclose(fp);
+        LOG_ERROR("fseek set failed: %s", path);
+        return -1;
+    }
+
+    buf = (unsigned char *)malloc((size_t)size);
+    if (!buf) {
+        fclose(fp);
+        LOG_ERROR("malloc image buffer failed, size=%ld", size);
+        return -1;
+    }
+
+    if (fread(buf, 1, (size_t)size, fp) != (size_t)size) {
+        fclose(fp);
+        free(buf);
+        LOG_ERROR("read image failed: %s", path);
+        return -1;
+    }
+
     fclose(fp);
 
-    if(read_size != image_size){
-        LOG_ERROR("read image failed, read=%%d, expected=%d", read_size, image_size);
-        free(image_buf);
+    *out_buf = buf;
+    *out_size = (int)size;
+
+    return 0;
+}
+
+static const char *get_filename_from_path(const char *path)
+{
+    const char *p = NULL;
+
+    if (!path) {
+        return "unknown";
+    }
+
+    p = strrchr(path, '/');
+    if (p) {
+        return p + 1;
+    }
+
+    return path;
+}
+
+int packet_send_image_ex(int sockfd,
+                         const char *image_path,
+                         const char *device_id,
+                         const char *image_format,
+                         int width,
+                         int height)
+{
+    unsigned char *image_buf = NULL;
+    int image_size = 0;
+
+    cJSON *root = NULL;
+    char *json_str = NULL;
+
+    int json_len = 0;
+    uint32_t json_len_net = 0;
+
+    int ret = -1;
+
+    if (!image_path || !device_id || !image_format) {
+        LOG_ERROR("packet_send_image_ex invalid args");
         return -1;
     }
 
-    char json_header[512];
-    const char *filename = get_filename_from_path(jpg_path);
-
-    //给服务器看的内容
-    int json_len = access_build_snapshot_header(
-        json_header,
-        sizeof(json_header),
-        device_id,
-        filename,
-        image_size
-    );
-
-    if (json_len <= 0 || json_len >= (int)sizeof(json_header)) {
-        LOG_ERROR("build json header failed");
-        free(image_buf);
+    if (read_file_to_buffer(image_path, &image_buf, &image_size) < 0) {
         return -1;
     }
 
-    uint32_t net_json_len = htonl((uint32_t)json_len);
+    LOG_INFO("send image: %s", image_path);
+    LOG_INFO("image format: %s", image_format);
+    LOG_INFO("image width : %d", width);
+    LOG_INFO("image height: %d", height);
+    LOG_INFO("image size : %d bytes", image_size);
 
-    LOG_INFO("send image: %s", jpg_path);
-    LOG_INFO("image size: %d bytes", image_size);
+    root = cJSON_CreateObject();
+    if (!root) {
+        LOG_ERROR("cJSON_CreateObject failed");
+        goto cleanup;
+    }
+
+    cJSON_AddStringToObject(root, "type", "snapshot");
+    cJSON_AddStringToObject(root, "device_id", device_id);
+    cJSON_AddStringToObject(root, "filename", get_filename_from_path(image_path));
+    cJSON_AddStringToObject(root, "image_format", image_format);
+    cJSON_AddNumberToObject(root, "width", width);
+    cJSON_AddNumberToObject(root, "height", height);
+    cJSON_AddNumberToObject(root, "image_size", image_size);
+
+    json_str = cJSON_PrintUnformatted(root);
+    if (!json_str) {
+        LOG_ERROR("cJSON_PrintUnformatted failed");
+        goto cleanup;
+    }
+
+    json_len = (int)strlen(json_str);
+    json_len_net = htonl((uint32_t)json_len);
+
     LOG_INFO("json header length: %d", json_len);
-    LOG_DEBUG("json header: %s", json_header);
+    LOG_INFO("json header: %s", json_str);
 
-    if (tcp_send_all(sockfd, &net_json_len, sizeof(net_json_len)) != sizeof(net_json_len)) {
+    /*
+     * 协议：
+     * [4字节 JSON 长度][JSON 头][图像数据]
+     */
+    if (tcp_send_all(sockfd, &json_len_net, 4) < 0) {
         LOG_ERROR("send json length failed");
-        free(image_buf);
-        return -1;
+        goto cleanup;
     }
 
-    //发送数据
-    if (tcp_send_all(sockfd, json_header, json_len) != json_len) {
+    if (tcp_send_all(sockfd, json_str, json_len) < 0) {
         LOG_ERROR("send json header failed");
-        free(image_buf);
-        return -1;
+        goto cleanup;
     }
 
-    //发送图片
-    if (tcp_send_all(sockfd, image_buf, image_size) != image_size) {
+    if (tcp_send_all(sockfd, image_buf, image_size) < 0) {
         LOG_ERROR("send image data failed");
-        free(image_buf);
-        return -1;
+        goto cleanup;
     }
-
-    free(image_buf);
 
     LOG_INFO("image send success");
-    return 0;
+    ret = 0;
+
+cleanup:
+    if (json_str) {
+        free(json_str);
+    }
+
+    if (root) {
+        cJSON_Delete(root);
+    }
+
+    if (image_buf) {
+        free(image_buf);
+    }
+
+    return ret;
+}
+
+int packet_send_image(int sockfd,
+                      const char *image_path,
+                      const char *device_id)
+{
+    /*
+     * 旧测试图 dyj.jpg / unknown.jpg 仍然按 JPEG 发送。
+     */
+    return packet_send_image_ex(sockfd,
+                                image_path,
+                                device_id,
+                                "JPEG",
+                                0,
+                                0);
 }
