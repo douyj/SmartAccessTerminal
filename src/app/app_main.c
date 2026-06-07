@@ -9,9 +9,11 @@
 #include "config/device_config.h"
 #include "storage/snapshot_storage.h"
 #include "camera/camera.h"
+#include "app/app_worker.h"
 
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 
 
 static void print_usage(const char *prog)
@@ -229,15 +231,22 @@ int app_main(int argc, char *argv[])
 
     device_config_print(&config);
 
-    int ret = app_run_once(&config);
-
+    if (app_worker_start(&config) < 0) {
+    LOG_ERROR("app worker start failed");
     app_deinit();
-
-    if (ret < 0) {
-        LOG_ERROR("app run failed");
-        return -1;
+    return -1;
     }
+
+    LOG_INFO("main loop started, press Ctrl+C to exit");
+
+    while (1) {
+        sleep(1);
+    }
+
+    app_worker_stop();
+    app_deinit();
 
     LOG_INFO("app exit");
     return 0;
+
 }

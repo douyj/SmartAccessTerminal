@@ -28,6 +28,8 @@ set(COMMON_SOURCES
 
     src/app/app_state.c
 
+    src/app/app_worker.c
+
     src/third_party/cJSON.c
 )
 
@@ -36,6 +38,11 @@ add_executable(smart_access_terminal
     src/app/app_main.c
 
     ${COMMON_SOURCES}
+)
+
+ target_link_libraries(smart_access_terminal
+    pthread
+    m
 )
 
 add_executable(test_tcp_send_image
@@ -118,6 +125,28 @@ if(BUILD_LVGL_UI_TEST)
 
         ${LVGL_SOURCES}
         ${LV_DRIVERS_SOURCES}
+    )
+
+    add_executable(test_app_integrated_ui
+        tests/test_app_integrated_ui.c
+        src/ui/ui_main.c
+        src/app/app_state.c
+        ${LVGL_SOURCES}
+        ${LV_DRIVERS_SOURCES}
+    )
+
+    target_include_directories(test_app_integrated_ui PRIVATE
+        ${LVGL_COMMON_INCLUDES}
+    )
+
+    target_compile_definitions(test_app_integrated_ui PRIVATE
+        ${LVGL_COMMON_DEFINES}
+    )
+
+    target_link_libraries(test_app_integrated_ui
+        ${SDL2_LIBRARIES}
+        m
+        pthread
     )
 
     target_include_directories(test_app_state_ui PRIVATE
