@@ -64,6 +64,67 @@ target_link_libraries(test_v4l2_rgb565_capture
     m
 )
 
+option(BUILD_LVGL_FB_TEST "Build LVGL framebuffer test" OFF)
+
+if(BUILD_LVGL_FB_TEST)
+    file(GLOB_RECURSE LVGL_SOURCES_FB
+        ${PROJECT_SOURCE_DIR}/src/third_party/lvgl/src/*.c
+    )
+
+    add_executable(test_lvgl_fb
+        tests/test_lvgl_fb.c
+        src/third_party/lv_drivers/display/fbdev.c
+        ${LVGL_SOURCES_FB}
+    )
+
+    add_executable(smart_access_terminal_fb
+        src/main.c
+        src/app/app_main_fb.c
+        src/ui/ui_main.c
+        src/third_party/lv_drivers/display/fbdev.c
+        ${COMMON_SOURCES}
+        ${LVGL_SOURCES_FB}
+    )
+
+    target_include_directories(smart_access_terminal_fb PRIVATE
+        ${PROJECT_SOURCE_DIR}
+        ${PROJECT_SOURCE_DIR}/include
+        ${PROJECT_SOURCE_DIR}/include/third_party
+        ${PROJECT_SOURCE_DIR}/src/third_party
+        ${PROJECT_SOURCE_DIR}/src/third_party/lvgl
+        ${PROJECT_SOURCE_DIR}/src/third_party/lv_drivers
+    )
+
+    target_compile_definitions(smart_access_terminal_fb PRIVATE
+        LV_CONF_INCLUDE_SIMPLE
+        LV_DRV_CONF_INCLUDE_SIMPLE
+        USE_FBDEV=1
+    )
+
+    target_link_libraries(smart_access_terminal_fb
+        m
+        pthread
+    )
+
+    target_include_directories(test_lvgl_fb PRIVATE
+        ${PROJECT_SOURCE_DIR}
+        ${PROJECT_SOURCE_DIR}/include
+        ${PROJECT_SOURCE_DIR}/src/third_party
+        ${PROJECT_SOURCE_DIR}/src/third_party/lvgl
+        ${PROJECT_SOURCE_DIR}/src/third_party/lv_drivers
+    )
+
+    target_compile_definitions(test_lvgl_fb PRIVATE
+        LV_CONF_INCLUDE_SIMPLE
+        LV_DRV_CONF_INCLUDE_SIMPLE
+        USE_FBDEV=1
+    )
+
+    target_link_libraries(test_lvgl_fb
+        m
+        pthread
+    )
+endif()
 
 
 option(BUILD_LVGL_UI_TEST "Build LVGL SDL UI test" ON)

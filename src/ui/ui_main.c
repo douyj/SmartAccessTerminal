@@ -1,14 +1,13 @@
 /**
  * @file    ui/ui_main.c
- * @brief   人脸识别门禁 LVGL 分层界面实现
- * @details 采用视频底层层 + 悬浮叠加层双层架构，实现相机画面模拟、顶部状态栏、
- *          中心状态提示、底部识别结果卡片、延时自动隐藏等功能；
- *          对接应用全局状态，完成业务状态到 UI 界面的自动刷新
+ * @brief   SmartAccessTerminal 1024x600 横屏 LVGL UI
+ * @details 适配 IMX6ULL 7寸 1024x600 LCD：
+ *          左侧大区域模拟摄像头画面，右侧结果卡片，顶部状态栏，底部流程状态栏。
+ *          通过 app_state 与 worker 后台线程解耦。
  * @author  Deng Yangjie
- * @date    2026-05-31
- * @version V1.0
- * @note    界面分辨率 480*800，结果卡片依靠 LVGL 定时器实现延时自动隐藏
+ * @date    2026
  */
+
 #include "ui/ui_main.h"
 
 #include "lvgl/lvgl.h"
@@ -16,48 +15,57 @@
 #include <stdio.h>
 #include <string.h>
 
-#define COLOR_BG        0x06111F      /**< 全局背景色 */
-#define COLOR_PANEL     0x102033      /**< 结果面板底色 */
-#define COLOR_BLUE      0x1E90FF      /**< 蓝色(上传/边框) */
-#define COLOR_CYAN      0x00D1FF      /**< 青色(待机/抓拍) */
-#define COLOR_GREEN     0x20E070      /**< 绿色(成功/正常) */
-#define COLOR_RED       0xFF4D4D      /**< 红色(拒绝/错误) */
-#define COLOR_YELLOW    0xFFD166      /**< 黄色(警告/未检测人脸) */
-#define COLOR_WHITE     0xFFFFFF      /**< 主文本白色 */
-#define COLOR_GRAY      0xA8B3C2      /**< 次要文本灰色 */
+#define LCD_W           1024
+#define LCD_H           600
 
-static lv_obj_t *g_video_layer = NULL;  /**< 视频底层：模拟相机画面 */
-static lv_obj_t *g_overlay_layer = NULL;    /**< 悬浮叠加层：放置所有UI控件 */
+#define COLOR_BG        0x06111F
+#define COLOR_PANEL     0x102033
+#define COLOR_PANEL2    0x0B1828
+#define COLOR_BLUE      0x1E90FF
+#define COLOR_CYAN      0x00D1FF
+#define COLOR_GREEN     0x20E070
+#define COLOR_RED       0xFF4D4D
+#define COLOR_YELLOW    0xFFD166
+#define COLOR_WHITE     0xFFFFFF
+#define COLOR_GRAY      0xA8B3C2
+#define COLOR_DARK      0x07111F
 
-//UI_TOP_BAR 顶部状态栏控件
+/* 主区域 */
+static lv_obj_t *g_video_layer = NULL;
+static lv_obj_t *g_overlay_layer = NULL;
+
+/* 顶部状态栏 */
+static lv_obj_t *g_top_bar = NULL;
 static lv_obj_t *g_label_time = NULL;
 static lv_obj_t *g_label_wifi = NULL;
 static lv_obj_t *g_label_tcp = NULL;
 
-static lv_obj_t *g_label_status = NULL;     /**< 屏幕中心运行状态文字 */
+/* 左侧相机区域 */
+static lv_obj_t *g_camera_panel = NULL;
+static lv_obj_t *g_label_camera_title = NULL;
+static lv_obj_t *g_label_status = NULL;
+static lv_obj_t *g_label_camera_hint = NULL;
 
-//UI_RESULT_CARD 底部识别结果卡片控件
-static lv_obj_t *g_result_card    = NULL;  /**< 结果卡片总容器 */
-static lv_obj_t *g_face_thumb      = NULL;  /**< 人脸缩略图容器 */
-static lv_obj_t *g_face_thumb_label = NULL;/**< 缩略图内文字标签 */
+/* 右侧结果卡片 */
+static lv_obj_t *g_result_card = NULL;
+static lv_obj_t *g_face_thumb = NULL;
+static lv_obj_t *g_face_thumb_label = NULL;
 
-static lv_obj_t *g_text_group      = NULL;  /**< 右侧文本分组容器 */
-static lv_obj_t *g_label_title    = NULL;  /**< 结果标题 */
-static lv_obj_t *g_label_name     = NULL;  /**< 人员姓名 */
-static lv_obj_t *g_label_desc     = NULL;  /**< 置信度/描述文本 */
-
+static lv_obj_t *g_text_group = NULL;
+static lv_obj_t *g_label_title = NULL;
+static lv_obj_t *g_label_name = NULL;
+static lv_obj_t *g_label_desc = NULL;
 
 static lv_obj_t *g_action_pill = NULL;
 static lv_obj_t *g_label_action = NULL;
 
+/* 底部状态栏 */
+static lv_obj_t *g_bottom_bar = NULL;
+static lv_obj_t *g_label_bottom_status = NULL;
+static lv_obj_t *g_label_bottom_hint = NULL;
+
 static lv_timer_t *g_hide_card_timer = NULL;
 
-/**
- * @brief       设置标签文本颜色
- * @param[in]   obj     LVGL标签控件句柄
- * @param[in]   color   十六进制RGB颜色值
- * @retval      无
- */
 
 static void set_text_color(lv_obj_t *obj, unsigned int color)
 {
@@ -66,16 +74,6 @@ static void set_text_color(lv_obj_t *obj, unsigned int color)
     }
 }
 
-/**
- * @brief       快速创建文本标签工具函数
- * @param[in]   parent  父容器句柄
- * @param[in]   text    显示文本
- * @param[in]   x       X坐标
- * @param[in]   y       Y坐标
- * @param[in]   color   文本颜色
- * @param[in]   font    字体句柄，传NULL使用默认字体
- * @retval      lv_obj_t* 新建标签句柄
- */
 
 static lv_obj_t *make_label(lv_obj_t *parent,
                             const char *text,
@@ -100,12 +98,6 @@ static lv_obj_t *make_label(lv_obj_t *parent,
 void ui_hide_result_card(void);
 
 
-/**
- * @brief       卡片自动隐藏定时器回调
- * @param[in]   timer   定时器句柄
- * @retval      无
- * @note        执行隐藏并销毁定时器
- */
 static void hide_card_timer_cb(lv_timer_t *timer)
 {
     (void)timer;
@@ -118,11 +110,10 @@ static void hide_card_timer_cb(lv_timer_t *timer)
     }
 }
 
-/**
- * @brief       显示结果卡片并启动延时自动隐藏
- * @param[in]   ms  卡片显示时长(毫秒)
- * @retval      无
- * @note        若已有运行中的定时器，先销毁再新建
+
+/*
+ * 横屏版不真正隐藏右侧结果卡片。
+ * 收到结果后显示几秒，然后恢复为 Waiting 状态。
  */
 static void show_result_card_for_ms(unsigned int ms)
 {
@@ -141,43 +132,43 @@ static void show_result_card_for_ms(unsigned int ms)
     lv_timer_set_repeat_count(g_hide_card_timer, 1);
 }
 
+
+static void style_panel(lv_obj_t *obj, unsigned int bg, int radius)
+{
+    lv_obj_set_style_radius(obj, radius, 0);
+    lv_obj_set_style_bg_color(obj, lv_color_hex(bg), 0);
+    lv_obj_set_style_bg_opa(obj, LV_OPA_90, 0);
+    lv_obj_set_style_border_color(obj, lv_color_hex(0x18324F), 0);
+    lv_obj_set_style_border_opa(obj, LV_OPA_60, 0);
+    lv_obj_set_style_border_width(obj, 1, 0);
+    lv_obj_set_style_pad_all(obj, 0, 0);
+    lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
+}
+
+
 /**
- * @brief       创建视频底层容器
- * @param[in]   scr  主屏幕句柄
- * @retval      无
- * @note        当前使用纯色背景模拟相机画面，后续可替换为 lv_img 显示RGB565图像
+ * @brief 背景层
  */
 static void create_video_layer(lv_obj_t *scr)
 {
-    /*
-     * 当前先用深色背景模拟全屏实时视频。
-     * 后面接 RGB565 实时画面时，这里可以换成 lv_img。
-     */
     g_video_layer = lv_obj_create(scr);
-    lv_obj_set_size(g_video_layer, 480, 800);
+    lv_obj_set_size(g_video_layer, LCD_W, LCD_H);
     lv_obj_set_pos(g_video_layer, 0, 0);
 
     lv_obj_set_style_bg_color(g_video_layer, lv_color_hex(COLOR_BG), 0);
     lv_obj_set_style_border_width(g_video_layer, 0, 0);
     lv_obj_set_style_pad_all(g_video_layer, 0, 0);
     lv_obj_clear_flag(g_video_layer, LV_OBJ_FLAG_SCROLLABLE);
-
-    lv_obj_t *mock_text = lv_label_create(g_video_layer);
-    lv_label_set_text(mock_text, "LIVE CAMERA");
-    lv_obj_set_style_text_color(mock_text, lv_color_hex(0x1A3555), 0);
-    lv_obj_set_style_text_font(mock_text, &lv_font_montserrat_24, 0);
-    lv_obj_align(mock_text, LV_ALIGN_CENTER, 0, -120);
 }
 
 
+/**
+ * @brief 透明悬浮层
+ */
 static void create_overlay_layer(lv_obj_t *scr)
 {
-    /*
-     * 全屏透明悬浮层。
-     * 顶部栏、状态文字、底部识别卡片都放在这一层。
-     */
     g_overlay_layer = lv_obj_create(scr);
-    lv_obj_set_size(g_overlay_layer, 480, 800);
+    lv_obj_set_size(g_overlay_layer, LCD_W, LCD_H);
     lv_obj_set_pos(g_overlay_layer, 0, 0);
 
     lv_obj_set_style_bg_opa(g_overlay_layer, LV_OPA_TRANSP, 0);
@@ -187,109 +178,157 @@ static void create_overlay_layer(lv_obj_t *scr)
 }
 
 
+/**
+ * @brief 顶部状态栏
+ */
 static void create_top_bar(lv_obj_t *parent)
 {
-    /*
-     * 顶部状态栏悬浮在视频上。
-     */
-    lv_obj_t *bar = lv_obj_create(parent);
-    lv_obj_set_size(bar, 440, 48);
-    lv_obj_align(bar, LV_ALIGN_TOP_MID, 0, 16);
+    g_top_bar = lv_obj_create(parent);
+    lv_obj_set_size(g_top_bar, 960, 56);
+    lv_obj_align(g_top_bar, LV_ALIGN_TOP_MID, 0, 18);
 
-    lv_obj_set_style_radius(bar, 18, 0);
-    lv_obj_set_style_bg_color(bar, lv_color_hex(0x07111F), 0);
-    lv_obj_set_style_bg_opa(bar, LV_OPA_60, 0);
-    lv_obj_set_style_border_width(bar, 0, 0);
-    lv_obj_set_style_pad_all(bar, 0, 0);
-    lv_obj_clear_flag(bar, LV_OBJ_FLAG_SCROLLABLE);
+    lv_obj_set_style_radius(g_top_bar, 20, 0);
+    lv_obj_set_style_bg_color(g_top_bar, lv_color_hex(COLOR_DARK), 0);
+    lv_obj_set_style_bg_opa(g_top_bar, LV_OPA_80, 0);
+    lv_obj_set_style_border_width(g_top_bar, 0, 0);
+    lv_obj_set_style_pad_all(g_top_bar, 0, 0);
+    lv_obj_clear_flag(g_top_bar, LV_OBJ_FLAG_SCROLLABLE);
 
-    g_label_time = make_label(bar,
+    g_label_time = make_label(g_top_bar,
                               "23:13",
-                              18,
-                              13,
+                              28,
+                              17,
                               COLOR_WHITE,
                               &lv_font_montserrat_18);
 
-    g_label_wifi = make_label(bar,
-                              "WiFi",
-                              280,
-                              15,
+    lv_obj_t *title = make_label(g_top_bar,
+                                 "Smart Access Terminal",
+                                 330,
+                                 15,
+                                 COLOR_CYAN,
+                                 &lv_font_montserrat_20);
+
+    (void)title;
+
+    g_label_wifi = make_label(g_top_bar,
+                              "WiFi ON",
+                              760,
+                              19,
                               COLOR_GREEN,
                               &lv_font_montserrat_14);
 
-    g_label_tcp = make_label(bar,
-                             "TCP ON",
-                             340,
-                             15,
-                             COLOR_GREEN,
+    g_label_tcp = make_label(g_top_bar,
+                             "TCP OFF",
+                             850,
+                             19,
+                             COLOR_RED,
                              &lv_font_montserrat_14);
 }
 
 
-static void create_center_status(lv_obj_t *parent)
+/**
+ * @brief 左侧相机/扫描区域
+ */
+static void create_camera_panel(lv_obj_t *parent)
 {
-    /*
-     * 中间悬浮状态文字。
-     * 过程状态只更新这里，不弹出底部结果卡片。
-     */
-    g_label_status = lv_label_create(parent);
+    g_camera_panel = lv_obj_create(parent);
+    lv_obj_set_size(g_camera_panel, 640, 400);
+    lv_obj_set_pos(g_camera_panel, 32, 92);
+    style_panel(g_camera_panel, 0x071827, 26);
+
+    g_label_camera_title = make_label(g_camera_panel,
+                                      "LIVE CAMERA",
+                                      32,
+                                      28,
+                                      COLOR_CYAN,
+                                      &lv_font_montserrat_20);
+
+    lv_obj_t *corner1 = lv_obj_create(g_camera_panel);
+    lv_obj_set_size(corner1, 86, 4);
+    lv_obj_set_pos(corner1, 32, 76);
+    lv_obj_set_style_bg_color(corner1, lv_color_hex(COLOR_CYAN), 0);
+    lv_obj_set_style_bg_opa(corner1, LV_OPA_80, 0);
+    lv_obj_set_style_border_width(corner1, 0, 0);
+    lv_obj_clear_flag(corner1, LV_OBJ_FLAG_SCROLLABLE);
+
+    lv_obj_t *corner2 = lv_obj_create(g_camera_panel);
+    lv_obj_set_size(corner2, 4, 86);
+    lv_obj_set_pos(corner2, 32, 76);
+    lv_obj_set_style_bg_color(corner2, lv_color_hex(COLOR_CYAN), 0);
+    lv_obj_set_style_bg_opa(corner2, LV_OPA_80, 0);
+    lv_obj_set_style_border_width(corner2, 0, 0);
+    lv_obj_clear_flag(corner2, LV_OBJ_FLAG_SCROLLABLE);
+
+    lv_obj_t *corner3 = lv_obj_create(g_camera_panel);
+    lv_obj_set_size(corner3, 86, 4);
+    lv_obj_set_pos(corner3, 520, 315);
+    lv_obj_set_style_bg_color(corner3, lv_color_hex(COLOR_CYAN), 0);
+    lv_obj_set_style_bg_opa(corner3, LV_OPA_80, 0);
+    lv_obj_set_style_border_width(corner3, 0, 0);
+    lv_obj_clear_flag(corner3, LV_OBJ_FLAG_SCROLLABLE);
+
+    lv_obj_t *corner4 = lv_obj_create(g_camera_panel);
+    lv_obj_set_size(corner4, 4, 86);
+    lv_obj_set_pos(corner4, 602, 233);
+    lv_obj_set_style_bg_color(corner4, lv_color_hex(COLOR_CYAN), 0);
+    lv_obj_set_style_bg_opa(corner4, LV_OPA_80, 0);
+    lv_obj_set_style_border_width(corner4, 0, 0);
+    lv_obj_clear_flag(corner4, LV_OBJ_FLAG_SCROLLABLE);
+
+    g_label_status = lv_label_create(g_camera_panel);
     lv_label_set_text(g_label_status, "AI SCANNING");
     lv_obj_set_style_text_color(g_label_status, lv_color_hex(COLOR_CYAN), 0);
-    lv_obj_set_style_text_font(g_label_status, &lv_font_montserrat_20, 0);
-    lv_obj_align(g_label_status, LV_ALIGN_CENTER, 0, 170);
+    lv_obj_set_style_text_font(g_label_status, &lv_font_montserrat_24, 0);
+    lv_obj_align(g_label_status, LV_ALIGN_CENTER, 0, -10);
+
+    g_label_camera_hint = lv_label_create(g_camera_panel);
+    lv_label_set_text(g_label_camera_hint, "Waiting for face snapshot...");
+    lv_obj_set_style_text_color(g_label_camera_hint, lv_color_hex(COLOR_GRAY), 0);
+    lv_obj_set_style_text_font(g_label_camera_hint, &lv_font_montserrat_14, 0);
+    lv_obj_align(g_label_camera_hint, LV_ALIGN_CENTER, 0, 38);
 }
 
 
+/**
+ * @brief 右侧识别结果卡片
+ */
 static void create_result_card(lv_obj_t *parent)
 {
-    /*
-     * 底部悬浮识别卡片。
-     * 屏幕宽 480，卡片宽 408，左右边距约 36。
-     * 使用 LV_ALIGN_BOTTOM_MID 自动居中，避免肉眼看到左右不一致。
-     */
     g_result_card = lv_obj_create(parent);
-    lv_obj_set_size(g_result_card, 408, 148);
-    lv_obj_align(g_result_card, LV_ALIGN_BOTTOM_MID, 0, -26);
+    lv_obj_set_size(g_result_card, 304, 400);
+    lv_obj_set_pos(g_result_card, 704, 92);
+    style_panel(g_result_card, COLOR_PANEL, 26);
 
-    lv_obj_set_style_radius(g_result_card, 24, 0);
-    lv_obj_set_style_bg_color(g_result_card, lv_color_hex(COLOR_PANEL), 0);
-    lv_obj_set_style_bg_opa(g_result_card, LV_OPA_80, 0);
-    lv_obj_set_style_border_color(g_result_card, lv_color_hex(COLOR_BLUE), 0);
-    lv_obj_set_style_border_opa(g_result_card, LV_OPA_50, 0);
-    lv_obj_set_style_border_width(g_result_card, 1, 0);
-    lv_obj_set_style_pad_all(g_result_card, 0, 0);
-    lv_obj_clear_flag(g_result_card, LV_OBJ_FLAG_SCROLLABLE);
+    lv_obj_t *card_title = make_label(g_result_card,
+                                      "Recognition Result",
+                                      28,
+                                      24,
+                                      COLOR_GRAY,
+                                      &lv_font_montserrat_14);
+    (void)card_title;
 
-    /*
-     * 左侧识别帧缩略图区域。
-     * 后续这里会替换成后台识别那一帧画面。
-     */
     g_face_thumb = lv_obj_create(g_result_card);
-    lv_obj_set_size(g_face_thumb, 88, 96);
-    lv_obj_set_pos(g_face_thumb, 24, 26);
+    lv_obj_set_size(g_face_thumb, 120, 120);
+    lv_obj_align(g_face_thumb, LV_ALIGN_TOP_MID, 0, 58);
 
-    lv_obj_set_style_radius(g_face_thumb, 16, 0);
-    lv_obj_set_style_bg_color(g_face_thumb, lv_color_hex(0x0B1828), 0);
+    lv_obj_set_style_radius(g_face_thumb, 60, 0);
+    lv_obj_set_style_bg_color(g_face_thumb, lv_color_hex(COLOR_PANEL2), 0);
     lv_obj_set_style_bg_opa(g_face_thumb, LV_OPA_90, 0);
     lv_obj_set_style_border_color(g_face_thumb, lv_color_hex(COLOR_BLUE), 0);
     lv_obj_set_style_border_opa(g_face_thumb, LV_OPA_80, 0);
-    lv_obj_set_style_border_width(g_face_thumb, 1, 0);
+    lv_obj_set_style_border_width(g_face_thumb, 2, 0);
     lv_obj_set_style_pad_all(g_face_thumb, 0, 0);
     lv_obj_clear_flag(g_face_thumb, LV_OBJ_FLAG_SCROLLABLE);
 
     g_face_thumb_label = lv_label_create(g_face_thumb);
     lv_label_set_text(g_face_thumb_label, "FACE");
     lv_obj_set_style_text_color(g_face_thumb_label, lv_color_hex(0x315C88), 0);
-    lv_obj_set_style_text_font(g_face_thumb_label, &lv_font_montserrat_14, 0);
+    lv_obj_set_style_text_font(g_face_thumb_label, &lv_font_montserrat_18, 0);
     lv_obj_center(g_face_thumb_label);
 
-    /*
-     * 右侧文字整体区域。
-     * 做成一个透明 group，便于整体排版。
-     */
     g_text_group = lv_obj_create(g_result_card);
-    lv_obj_set_size(g_text_group, 250, 104);
-    lv_obj_set_pos(g_text_group, 132, 24);
+    lv_obj_set_size(g_text_group, 260, 160);
+    lv_obj_set_pos(g_text_group, 22, 205);
 
     lv_obj_set_style_bg_opa(g_text_group, LV_OPA_TRANSP, 0);
     lv_obj_set_style_border_width(g_text_group, 0, 0);
@@ -297,34 +336,31 @@ static void create_result_card(lv_obj_t *parent)
     lv_obj_clear_flag(g_text_group, LV_OBJ_FLAG_SCROLLABLE);
 
     g_label_title = make_label(g_text_group,
-                               "Identity Verified",
+                               "Waiting",
                                0,
                                0,
-                               COLOR_GREEN,
-                               &lv_font_montserrat_20);
+                               COLOR_CYAN,
+                               &lv_font_montserrat_24);
 
     g_label_name = make_label(g_text_group,
-                              "Deng Yangjie",
+                              "No result yet",
                               0,
-                              38,
+                              46,
                               COLOR_WHITE,
-                              &lv_font_montserrat_18);
+                              &lv_font_montserrat_20);
 
     g_label_desc = make_label(g_text_group,
-                              "Confidence 0.96",
+                              "Confidence --",
                               0,
-                              70,
+                              84,
                               COLOR_GRAY,
                               &lv_font_montserrat_14);
 
-    /*
-     * 右下角动作状态胶囊。
-     */
     g_action_pill = lv_obj_create(g_text_group);
-    lv_obj_set_size(g_action_pill, 116, 30);
-    lv_obj_set_pos(g_action_pill, 130, 66);
+    lv_obj_set_size(g_action_pill, 150, 34);
+    lv_obj_set_pos(g_action_pill, 0, 124);
 
-    lv_obj_set_style_radius(g_action_pill, 15, 0);
+    lv_obj_set_style_radius(g_action_pill, 17, 0);
     lv_obj_set_style_bg_color(g_action_pill, lv_color_hex(0x0E2A1C), 0);
     lv_obj_set_style_bg_opa(g_action_pill, LV_OPA_80, 0);
     lv_obj_set_style_border_width(g_action_pill, 0, 0);
@@ -332,30 +368,59 @@ static void create_result_card(lv_obj_t *parent)
     lv_obj_clear_flag(g_action_pill, LV_OBJ_FLAG_SCROLLABLE);
 
     g_label_action = lv_label_create(g_action_pill);
-    lv_label_set_text(g_label_action, "Door Open 3s");
+    lv_label_set_text(g_label_action, "Standby");
     lv_obj_set_style_text_color(g_label_action, lv_color_hex(COLOR_GREEN), 0);
     lv_obj_set_style_text_font(g_label_action, &lv_font_montserrat_14, 0);
     lv_obj_center(g_label_action);
+}
 
-    /*
-     * 默认隐藏。
-     * 只有收到识别结果后才显示几秒。
-     */
-    lv_obj_add_flag(g_result_card, LV_OBJ_FLAG_HIDDEN);
+
+/**
+ * @brief 底部流程状态栏
+ */
+static void create_bottom_bar(lv_obj_t *parent)
+{
+    g_bottom_bar = lv_obj_create(parent);
+    lv_obj_set_size(g_bottom_bar, 960, 66);
+    lv_obj_align(g_bottom_bar, LV_ALIGN_BOTTOM_MID, 0, -18);
+
+    lv_obj_set_style_radius(g_bottom_bar, 20, 0);
+    lv_obj_set_style_bg_color(g_bottom_bar, lv_color_hex(COLOR_DARK), 0);
+    lv_obj_set_style_bg_opa(g_bottom_bar, LV_OPA_80, 0);
+    lv_obj_set_style_border_width(g_bottom_bar, 0, 0);
+    lv_obj_set_style_pad_all(g_bottom_bar, 0, 0);
+    lv_obj_clear_flag(g_bottom_bar, LV_OBJ_FLAG_SCROLLABLE);
+
+    g_label_bottom_status = make_label(g_bottom_bar,
+                                       "Current Status: IDLE",
+                                       28,
+                                       20,
+                                       COLOR_WHITE,
+                                       &lv_font_montserrat_18);
+
+    g_label_bottom_hint = make_label(g_bottom_bar,
+                                     "V4L2 RGB565 | TCP Upload | JSON Result | Door Control",
+                                     520,
+                                     22,
+                                     COLOR_GRAY,
+                                     &lv_font_montserrat_14);
 }
 
 
 void ui_main_create(void)
 {
     lv_obj_t *scr = lv_scr_act();
+
     lv_obj_set_style_bg_color(scr, lv_color_hex(COLOR_BG), 0);
+    lv_obj_set_style_bg_opa(scr, LV_OPA_COVER, 0);
 
     create_video_layer(scr);
     create_overlay_layer(scr);
 
     create_top_bar(g_overlay_layer);
-    create_center_status(g_overlay_layer);
+    create_camera_panel(g_overlay_layer);
     create_result_card(g_overlay_layer);
+    create_bottom_bar(g_overlay_layer);
 
     ui_set_state(UI_STATE_IDLE);
 }
@@ -368,7 +433,7 @@ void ui_set_top_info(const char *time_str, int wifi_ok, int tcp_online)
     }
 
     if (g_label_wifi) {
-        lv_label_set_text(g_label_wifi, wifi_ok ? "WiFi" : "WiFi X");
+        lv_label_set_text(g_label_wifi, wifi_ok ? "WiFi ON" : "WiFi OFF");
         set_text_color(g_label_wifi, wifi_ok ? COLOR_GREEN : COLOR_RED);
     }
 
@@ -379,35 +444,68 @@ void ui_set_top_info(const char *time_str, int wifi_ok, int tcp_online)
 }
 
 
+static void set_bottom_status(const char *text, unsigned int color)
+{
+    if (g_label_bottom_status) {
+        lv_label_set_text(g_label_bottom_status, text);
+        set_text_color(g_label_bottom_status, color);
+    }
+}
+
+
 void ui_set_state(UiState state)
 {
     if (!g_label_status) {
         return;
     }
 
-    /*
-     * 过程状态只更新中间状态文字。
-     * 不显示底部结果卡片。
-     */
     switch (state) {
     case UI_STATE_IDLE:
         lv_label_set_text(g_label_status, "AI SCANNING");
         set_text_color(g_label_status, COLOR_CYAN);
+
+        if (g_label_camera_hint) {
+            lv_label_set_text(g_label_camera_hint, "Waiting for face snapshot...");
+            set_text_color(g_label_camera_hint, COLOR_GRAY);
+        }
+
+        set_bottom_status("Current Status: IDLE", COLOR_WHITE);
         break;
 
     case UI_STATE_CAPTURING:
         lv_label_set_text(g_label_status, "CAPTURING");
         set_text_color(g_label_status, COLOR_CYAN);
+
+        if (g_label_camera_hint) {
+            lv_label_set_text(g_label_camera_hint, "Camera is capturing RGB565 frame");
+            set_text_color(g_label_camera_hint, COLOR_CYAN);
+        }
+
+        set_bottom_status("Current Status: CAPTURING", COLOR_CYAN);
         break;
 
     case UI_STATE_UPLOADING:
         lv_label_set_text(g_label_status, "UPLOADING");
         set_text_color(g_label_status, COLOR_BLUE);
+
+        if (g_label_camera_hint) {
+            lv_label_set_text(g_label_camera_hint, "Uploading snapshot to Mac Qt server");
+            set_text_color(g_label_camera_hint, COLOR_BLUE);
+        }
+
+        set_bottom_status("Current Status: UPLOADING", COLOR_BLUE);
         break;
 
     case UI_STATE_VERIFYING:
         lv_label_set_text(g_label_status, "VERIFYING");
         set_text_color(g_label_status, COLOR_YELLOW);
+
+        if (g_label_camera_hint) {
+            lv_label_set_text(g_label_camera_hint, "Waiting for JSON recognition result");
+            set_text_color(g_label_camera_hint, COLOR_YELLOW);
+        }
+
+        set_bottom_status("Current Status: VERIFYING", COLOR_YELLOW);
         break;
 
     case UI_STATE_SUCCESS:
@@ -449,7 +547,7 @@ void ui_show_success(const char *name, float confidence, int auto_close_sec)
         lv_obj_set_style_border_color(g_face_thumb, lv_color_hex(COLOR_GREEN), 0);
     }
 
-    lv_label_set_text(g_label_title, "Identity Verified");
+    lv_label_set_text(g_label_title, "ACCESS GRANTED");
 
     snprintf(buf, sizeof(buf), "%s", name ? name : "Unknown");
     lv_label_set_text(g_label_name, buf);
@@ -469,8 +567,17 @@ void ui_show_success(const char *name, float confidence, int auto_close_sec)
         lv_obj_set_style_bg_color(g_action_pill, lv_color_hex(0x0E2A1C), 0);
     }
 
-    set_text_color(g_label_status, COLOR_GREEN);
-    lv_label_set_text(g_label_status, "ACCESS GRANTED");
+    if (g_label_status) {
+        lv_label_set_text(g_label_status, "ACCESS GRANTED");
+        set_text_color(g_label_status, COLOR_GREEN);
+    }
+
+    if (g_label_camera_hint) {
+        lv_label_set_text(g_label_camera_hint, "Identity verified, door is open");
+        set_text_color(g_label_camera_hint, COLOR_GREEN);
+    }
+
+    set_bottom_status("Current Status: ACCESS GRANTED", COLOR_GREEN);
 
     show_result_card_for_ms(3000);
 }
@@ -493,7 +600,7 @@ void ui_show_deny(const char *name, float confidence)
         lv_obj_set_style_border_color(g_face_thumb, lv_color_hex(COLOR_RED), 0);
     }
 
-    lv_label_set_text(g_label_title, "Access Denied");
+    lv_label_set_text(g_label_title, "ACCESS DENIED");
 
     snprintf(buf, sizeof(buf), "%s", name ? name : "Unknown");
     lv_label_set_text(g_label_name, buf);
@@ -512,8 +619,17 @@ void ui_show_deny(const char *name, float confidence)
         lv_obj_set_style_bg_color(g_action_pill, lv_color_hex(0x35151A), 0);
     }
 
-    set_text_color(g_label_status, COLOR_RED);
-    lv_label_set_text(g_label_status, "ACCESS DENIED");
+    if (g_label_status) {
+        lv_label_set_text(g_label_status, "ACCESS DENIED");
+        set_text_color(g_label_status, COLOR_RED);
+    }
+
+    if (g_label_camera_hint) {
+        lv_label_set_text(g_label_camera_hint, "Access rejected, alarm triggered");
+        set_text_color(g_label_camera_hint, COLOR_RED);
+    }
+
+    set_bottom_status("Current Status: ACCESS DENIED", COLOR_RED);
 
     show_result_card_for_ms(3000);
 }
@@ -534,7 +650,7 @@ void ui_show_no_face(void)
         lv_obj_set_style_border_color(g_face_thumb, lv_color_hex(COLOR_YELLOW), 0);
     }
 
-    lv_label_set_text(g_label_title, "No Face");
+    lv_label_set_text(g_label_title, "NO FACE");
     lv_label_set_text(g_label_name, "Please face camera");
     lv_label_set_text(g_label_desc, "Waiting for valid face");
     lv_label_set_text(g_label_action, "Closed");
@@ -548,8 +664,17 @@ void ui_show_no_face(void)
         lv_obj_set_style_bg_color(g_action_pill, lv_color_hex(0x332A12), 0);
     }
 
-    set_text_color(g_label_status, COLOR_YELLOW);
-    lv_label_set_text(g_label_status, "NO FACE");
+    if (g_label_status) {
+        lv_label_set_text(g_label_status, "NO FACE");
+        set_text_color(g_label_status, COLOR_YELLOW);
+    }
+
+    if (g_label_camera_hint) {
+        lv_label_set_text(g_label_camera_hint, "No valid face detected");
+        set_text_color(g_label_camera_hint, COLOR_YELLOW);
+    }
+
+    set_bottom_status("Current Status: NO FACE", COLOR_YELLOW);
 
     show_result_card_for_ms(2500);
 }
@@ -570,9 +695,9 @@ void ui_show_error(const char *msg)
         lv_obj_set_style_border_color(g_face_thumb, lv_color_hex(COLOR_RED), 0);
     }
 
-    lv_label_set_text(g_label_title, "System Error");
+    lv_label_set_text(g_label_title, "SYSTEM ERROR");
     lv_label_set_text(g_label_name, msg ? msg : "Unknown error");
-    lv_label_set_text(g_label_desc, "Check network");
+    lv_label_set_text(g_label_desc, "Check network or device");
     lv_label_set_text(g_label_action, "Closed");
 
     set_text_color(g_label_title, COLOR_RED);
@@ -584,8 +709,17 @@ void ui_show_error(const char *msg)
         lv_obj_set_style_bg_color(g_action_pill, lv_color_hex(0x35151A), 0);
     }
 
-    set_text_color(g_label_status, COLOR_RED);
-    lv_label_set_text(g_label_status, "ERROR");
+    if (g_label_status) {
+        lv_label_set_text(g_label_status, "ERROR");
+        set_text_color(g_label_status, COLOR_RED);
+    }
+
+    if (g_label_camera_hint) {
+        lv_label_set_text(g_label_camera_hint, "System error, please check logs");
+        set_text_color(g_label_camera_hint, COLOR_RED);
+    }
+
+    set_bottom_status("Current Status: ERROR", COLOR_RED);
 
     show_result_card_for_ms(3000);
 }
@@ -593,15 +727,55 @@ void ui_show_error(const char *msg)
 
 void ui_hide_result_card(void)
 {
-    if (g_result_card) {
-        lv_obj_add_flag(g_result_card, LV_OBJ_FLAG_HIDDEN);
+    /*
+     * 横屏版不隐藏右侧面板，只恢复为 Waiting 状态。
+     */
+    if (g_face_thumb_label) {
+        lv_label_set_text(g_face_thumb_label, "FACE");
+        set_text_color(g_face_thumb_label, COLOR_BLUE);
+    }
+
+    if (g_face_thumb) {
+        lv_obj_set_style_border_color(g_face_thumb, lv_color_hex(COLOR_BLUE), 0);
+    }
+
+    if (g_label_title) {
+        lv_label_set_text(g_label_title, "Waiting");
+        set_text_color(g_label_title, COLOR_CYAN);
+    }
+
+    if (g_label_name) {
+        lv_label_set_text(g_label_name, "No result yet");
+        set_text_color(g_label_name, COLOR_WHITE);
+    }
+
+    if (g_label_desc) {
+        lv_label_set_text(g_label_desc, "Confidence --");
+        set_text_color(g_label_desc, COLOR_GRAY);
+    }
+
+    if (g_label_action) {
+        lv_label_set_text(g_label_action, "Standby");
+        set_text_color(g_label_action, COLOR_GREEN);
+    }
+
+    if (g_action_pill) {
+        lv_obj_set_style_bg_color(g_action_pill, lv_color_hex(0x0E2A1C), 0);
     }
 
     if (g_label_status) {
         lv_label_set_text(g_label_status, "AI SCANNING");
         set_text_color(g_label_status, COLOR_CYAN);
     }
+
+    if (g_label_camera_hint) {
+        lv_label_set_text(g_label_camera_hint, "Waiting for face snapshot...");
+        set_text_color(g_label_camera_hint, COLOR_GRAY);
+    }
+
+    set_bottom_status("Current Status: IDLE", COLOR_WHITE);
 }
+
 
 static UiState app_status_to_ui_state(AppStatus status)
 {
@@ -627,6 +801,7 @@ static UiState app_status_to_ui_state(AppStatus status)
     }
 }
 
+
 void ui_update_from_app_state(void)
 {
     AppStateSnapshot snapshot;
@@ -634,13 +809,13 @@ void ui_update_from_app_state(void)
     app_state_get_snapshot(&snapshot);
 
     /*
-     * 顶部状态栏每次都可以刷新。
-     * 这里时间暂时写死，后面可以接 RTC / time(NULL)。
+     * 顶部状态栏每次刷新。
+     * 时间暂时写死，后续可接 time(NULL) 或 RTC。
      */
     ui_set_top_info("23:13", snapshot.wifi_ok, snapshot.tcp_online);
 
     /*
-     * 如果有新的识别结果，弹出结果卡片。
+     * 有新识别结果时，优先刷新右侧结果卡片。
      */
     if (snapshot.result_updated) {
         switch (snapshot.result) {
@@ -670,8 +845,7 @@ void ui_update_from_app_state(void)
     }
 
     /*
-     * 没有新结果时，只同步过程状态。
-     * 不会弹出结果卡片。
+     * 没有新结果时，同步过程状态。
      */
     ui_set_state(app_status_to_ui_state(snapshot.status));
 }
