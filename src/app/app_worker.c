@@ -8,11 +8,14 @@
 #include "bsp/alarm.h"
 #include "storage/snapshot_storage.h"
 #include "camera/camera.h"
+#include "camera/camera_preview.h"
+#include "app/app_trigger.h"
 
 #include <pthread.h>
 #include <string.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 static pthread_t g_worker_thread;
 static int g_worker_running = 0;
@@ -63,6 +66,25 @@ static void app_handle_access_result(const char *json_result)
         LOG_ERROR("未知识别结果: %s", json_result);
         app_state_set_error("unknown result");
     }
+}
+
+static int save_rgb565_file(const char *path, const unsigned char *data, int size)
+{
+    FILE *fp = fopen(path, "wb");
+    if (!fp) {
+        LOG_ERROR("[WORKER] fopen failed: %s", path);
+        return -1;
+    }
+
+    int written = fwrite(data, 1, size, fp);
+    fclose(fp);
+
+    if (written != size) {
+        LOG_ERROR("[WORKER] fwrite failed, written=%d, expected=%d", written, size);
+        return -1;
+    }
+
+    return 0;
 }
 
 /**
@@ -225,4 +247,191 @@ void app_worker_stop(void)
 int app_worker_is_running(void)
 {
     return g_worker_running;
+}
+
+static int app_worker_run_once_from_preview(const DeviceConfig *config)
+{
+    char snapshot_path[SNAPSHOT_PATH_MAX_LEN];
+
+    if (snapshot_storage_make_path(snapshot_path, sizeof(snapshot_path)) < 0) {
+        LOG_ERROR("make snapshot path failed");
+        app_state_set_error("make snapshot path failed");
+        return -1;
+    }
+
+    int w = 0;
+    int h = 0;
+    int frame_size = 0;
+
+    camera_preview_get_info(&w, &h, &frame_size);
+
+    if (w <= 0 || h <= 0 || frame_size <= 0) {
+        LOG_ERROR("[WORKER] invalid preview frame info: %dx%d size=%d", w, h, frame_size);
+        app_state_set_error("invalid preview frame");
+        return -1;
+    }
+
+    unsigned char *frame_buf = (unsigned char *)malloc(frame_size);
+    if (!frame_buf) {
+        LOG_ERROR("[WORKER] malloc frame_buf failed");
+        app_state_set_error("malloc frame failed");
+        return -1;
+    }
+
+    app_state_set_status(APP_STATUS_CAPTURING);
+
+    if (camera_preview_get_frame(frame_buf, frame_size, &w, &h, &frame_size) < 0) {
+        LOG_ERROR("[WORKER] get preview frame failed");
+        app_state_set_error("get preview frame failed");
+        free(frame_buf);
+        return -1;
+    }
+
+    LOG_INFO("[WORKER] got preview frame: %dx%d, size=%d", w, h, frame_size);
+    LOG_INFO("[WORKER] snapshot path: %s", snapshot_path);
+
+    if (save_rgb565_file(snapshot_path, frame_buf, frame_size) < 0) {
+        LOG_ERROR("[WORKER] save preview frame failed");
+        app_state_set_error("save preview frame failed");
+        free(frame_buf);
+        return -1;
+    }
+
+    free(frame_buf);
+    frame_buf = NULL;
+
+    LOG_INFO("server ip   : %s", config->server_ip);
+    LOG_INFO("server port : %d", config->server_port);
+    LOG_INFO("send image  : %s", snapshot_path);
+
+    int sockfd = tcp_client_connect(config->server_ip, config->server_port);
+    if (sockfd < 0) {
+        LOG_ERROR("connect server failed");
+        app_state_set_tcp_online(0);
+        app_state_set_error("connect server failed");
+        return -1;
+    }
+
+    app_state_set_tcp_online(1);
+    LOG_INFO("connect server success");
+
+    app_state_set_status(APP_STATUS_UPLOADING);
+
+    /*
+     * 注意：这里上传的宽高必须使用 preview 实际宽高 w/h，
+     * 不能再固定使用 config->image_width / image_height。
+     */
+    if (packet_send_image_ex(sockfd,
+                             snapshot_path,
+                             config->device_id,
+                             "RGB565",
+                             w,
+                             h) < 0) {
+        LOG_ERROR("send image failed");
+        app_state_set_error("send image failed");
+        tcp_client_close(sockfd);
+        app_state_set_tcp_online(0);
+        return -1;
+    }
+
+    app_state_set_status(APP_STATUS_VERIFYING);
+
+    LOG_INFO("send image success, waiting for result...");
+
+    char result_buf[1024];
+
+    int n = tcp_recv_line(sockfd, result_buf, sizeof(result_buf));
+    if (n <= 0) {
+        LOG_ERROR("recv result failed");
+        app_state_set_error("recv result failed");
+        tcp_client_close(sockfd);
+        app_state_set_tcp_online(0);
+        return -1;
+    }
+
+    if (n >= (int)sizeof(result_buf)) {
+        n = sizeof(result_buf) - 1;
+    }
+    result_buf[n] = '\0';
+
+    app_handle_access_result(result_buf);
+
+    tcp_client_close(sockfd);
+    app_state_set_tcp_online(0);
+
+    return 0;
+}
+
+static void *app_worker_preview_thread_func(void *arg)
+{
+    DeviceConfig *config = (DeviceConfig *)arg;
+
+    LOG_INFO("[WORKER] preview trigger worker thread started");
+    LOG_INFO("[WORKER] waiting for trigger...");
+
+    while (g_worker_running) {
+        /*
+         * 等待触发信号。
+         * 返回值：
+         *  1：收到触发，执行一次识别
+         *  0：超时，继续等待
+         * -1：停止
+         */
+        int trig = app_trigger_wait(1000);
+
+        if (!g_worker_running) {
+            break;
+        }
+
+        if (trig < 0) {
+            break;
+        }
+
+        if (trig == 0) {
+            continue;
+        }
+
+        LOG_INFO("[WORKER] trigger received, run recognition once");
+
+        int ret = app_worker_run_once_from_preview(config);
+
+        if (ret < 0) {
+            LOG_ERROR("[WORKER] preview triggered run failed");
+        } else {
+            LOG_INFO("[WORKER] preview triggered run success");
+        }
+
+        LOG_INFO("[WORKER] waiting for next trigger...");
+    }
+
+    LOG_INFO("[WORKER] preview trigger worker thread stopped");
+    return NULL;
+}
+
+int app_worker_start_from_preview(const DeviceConfig *config)
+{
+    if (!config) {
+        LOG_ERROR("[WORKER] invalid config");
+        return -1;
+    }
+
+    if (g_worker_running) {
+        LOG_WARN("[WORKER] already running");
+        return 0;
+    }
+
+    memcpy(&g_worker_config, config, sizeof(DeviceConfig));
+
+    g_worker_running = 1;
+
+    if (pthread_create(&g_worker_thread,
+                       NULL,
+                       app_worker_preview_thread_func,
+                       &g_worker_config) != 0) {
+        LOG_ERROR("[WORKER] pthread_create preview failed");
+        g_worker_running = 0;
+        return -1;
+    }
+
+    return 0;
 }

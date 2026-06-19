@@ -824,32 +824,58 @@ void ui_update_from_app_state(void)
      * 顶部状态栏每次刷新。
      * 时间暂时写死，后续可接 time(NULL) 或 RTC。
      */
-    ui_set_top_info("23:13", snapshot.wifi_ok, snapshot.tcp_online);
+    ui_set_top_info("LIVE", snapshot.wifi_ok, snapshot.tcp_online);
 
     /*
-     * 有新识别结果时，优先刷新右侧结果卡片。
+     * 关键修复：
+     * 有新识别结果时，优先根据 snapshot.status 刷新右侧卡片。
+     *
+     * 原因：
+     * 你的 worker 已经调用 app_state_set_result_allow()，
+     * 日志也显示 allow / door_open 都成功了。
+     * 但如果 app_state 内部没有正确设置 snapshot.result，
+     * 只设置了 snapshot.status = APP_STATUS_SUCCESS，
+     * 那么按 snapshot.result 判断就可能不会刷新右侧卡片。
      */
     if (snapshot.result_updated) {
-        switch (snapshot.result) {
-        case APP_RESULT_ALLOW:
+        if (snapshot.status == APP_STATUS_SUCCESS) {
             ui_show_success(snapshot.name, snapshot.confidence, 3);
-            break;
-
-        case APP_RESULT_DENY:
+        }
+        else if (snapshot.status == APP_STATUS_DENY) {
             ui_show_deny(snapshot.name, snapshot.confidence);
-            break;
-
-        case APP_RESULT_NO_FACE:
+        }
+        else if (snapshot.status == APP_STATUS_NO_FACE) {
             ui_show_no_face();
-            break;
-
-        case APP_RESULT_ERROR:
+        }
+        else if (snapshot.status == APP_STATUS_ERROR) {
             ui_show_error(snapshot.message);
-            break;
+        }
+        else {
+            /*
+             * 兼容旧逻辑：
+             * 如果 status 没有进入结果状态，再 fallback 到 snapshot.result。
+             */
+            switch (snapshot.result) {
+            case APP_RESULT_ALLOW:
+                ui_show_success(snapshot.name, snapshot.confidence, 3);
+                break;
 
-        case APP_RESULT_NONE:
-        default:
-            break;
+            case APP_RESULT_DENY:
+                ui_show_deny(snapshot.name, snapshot.confidence);
+                break;
+
+            case APP_RESULT_NO_FACE:
+                ui_show_no_face();
+                break;
+
+            case APP_RESULT_ERROR:
+                ui_show_error(snapshot.message);
+                break;
+
+            case APP_RESULT_NONE:
+            default:
+                break;
+            }
         }
 
         app_state_clear_result_updated();
@@ -857,9 +883,30 @@ void ui_update_from_app_state(void)
     }
 
     /*
-     * 没有新结果时，同步过程状态。
+     * 没有新结果时，只同步过程状态。
+     *
+     * 注意：
+     * 这里不要让 SUCCESS / DENY / NO_FACE / ERROR 每 5ms 重复触发 ui_show_xxx，
+     * 否则会不断创建 hide timer，显示逻辑会乱。
      */
-    ui_set_state(app_status_to_ui_state(snapshot.status));
+    if (snapshot.status == APP_STATUS_IDLE) {
+        ui_set_state(UI_STATE_IDLE);
+    }
+    else if (snapshot.status == APP_STATUS_CAPTURING) {
+        ui_set_state(UI_STATE_CAPTURING);
+    }
+    else if (snapshot.status == APP_STATUS_UPLOADING) {
+        ui_set_state(UI_STATE_UPLOADING);
+    }
+    else if (snapshot.status == APP_STATUS_VERIFYING) {
+        ui_set_state(UI_STATE_VERIFYING);
+    }
+    else {
+        /*
+         * 如果当前是 SUCCESS / DENY / NO_FACE / ERROR，
+         * 没有新结果时不要覆盖右侧卡片。
+         */
+    }
 }
 
 
