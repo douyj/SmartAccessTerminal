@@ -46,6 +46,13 @@ static lv_obj_t *g_label_camera_title = NULL;
 static lv_obj_t *g_label_status = NULL;
 static lv_obj_t *g_label_camera_hint = NULL;
 
+static lv_obj_t *g_camera_img = NULL;
+static lv_img_dsc_t g_camera_img_dsc;
+static unsigned char *g_camera_img_buf = NULL;
+static int g_camera_img_buf_size = 0;
+static int g_camera_img_w = 0;
+static int g_camera_img_h = 0;
+
 /* 右侧结果卡片 */
 static lv_obj_t *g_result_card = NULL;
 static lv_obj_t *g_face_thumb = NULL;
@@ -242,6 +249,11 @@ static void create_camera_panel(lv_obj_t *parent)
                                       28,
                                       COLOR_CYAN,
                                       &lv_font_montserrat_20);
+
+    g_camera_img = lv_img_create(g_camera_panel);
+    lv_obj_set_size(g_camera_img, 320, 240);
+    lv_obj_align(g_camera_img, LV_ALIGN_CENTER, 0, 8);
+    lv_obj_add_flag(g_camera_img, LV_OBJ_FLAG_HIDDEN);
 
     lv_obj_t *corner1 = lv_obj_create(g_camera_panel);
     lv_obj_set_size(corner1, 86, 4);
@@ -848,4 +860,75 @@ void ui_update_from_app_state(void)
      * 没有新结果时，同步过程状态。
      */
     ui_set_state(app_status_to_ui_state(snapshot.status));
+}
+
+
+void ui_update_camera_frame(const unsigned char *rgb565_data,
+                            int width,
+                            int height,
+                            int frame_size)
+{
+    if (!rgb565_data || width <= 0 || height <= 0 || frame_size <= 0) {
+        return;
+    }
+
+    if (!g_camera_img) {
+        return;
+    }
+
+    int expected_size = width * height * 2;
+    if (frame_size < expected_size) {
+        return;
+    }
+
+    /*
+     * 如果分辨率变化，重新分配 LVGL 图像缓存。
+     */
+    if (!g_camera_img_buf ||
+        g_camera_img_w != width ||
+        g_camera_img_h != height ||
+        g_camera_img_buf_size < expected_size) {
+
+        if (g_camera_img_buf) {
+            lv_mem_free(g_camera_img_buf);
+            g_camera_img_buf = NULL;
+        }
+
+        g_camera_img_buf = (unsigned char *)lv_mem_alloc(expected_size);
+        if (!g_camera_img_buf) {
+            return;
+        }
+
+        g_camera_img_buf_size = expected_size;
+        g_camera_img_w = width;
+        g_camera_img_h = height;
+
+        memset(&g_camera_img_dsc, 0, sizeof(g_camera_img_dsc));
+
+        g_camera_img_dsc.header.always_zero = 0;
+        g_camera_img_dsc.header.w = width;
+        g_camera_img_dsc.header.h = height;
+        g_camera_img_dsc.header.cf = LV_IMG_CF_TRUE_COLOR;
+        g_camera_img_dsc.data_size = expected_size;
+        g_camera_img_dsc.data = g_camera_img_buf;
+    }
+
+    /*
+     * 拷贝最新 RGB565 帧到 LVGL 图像缓存。
+     * 注意：这个函数必须在 LVGL 主线程调用。
+     */
+    memcpy(g_camera_img_buf, rgb565_data, expected_size);
+
+    lv_img_set_src(g_camera_img, &g_camera_img_dsc);
+    lv_obj_clear_flag(g_camera_img, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_invalidate(g_camera_img);
+
+    /*
+     * 有真实图像后，把中间大字稍微上移/保留也可以。
+     * 为了不遮挡画面，这里只更新提示文字。
+     */
+    if (g_label_camera_hint) {
+        lv_label_set_text(g_label_camera_hint, "Live preview running");
+        set_text_color(g_label_camera_hint, COLOR_GREEN);
+    }
 }

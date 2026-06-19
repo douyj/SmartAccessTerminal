@@ -49,3 +49,14 @@ cmake .. \
 
 make test_v4l2_rgb565_capture -j4
 ```
+
+# u盘挂载
+```c
+lsblk
+
+sudo mkdir -p /mnt/usb
+sudo mount /dev/sda1 /mnt/usb
+
+sync
+sudo umount /mnt/usb
+```

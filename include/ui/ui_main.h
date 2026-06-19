@@ -32,4 +32,6 @@ void ui_hide_result_card(void);
  */
 void ui_update_from_app_state(void);
 
+void ui_update_camera_frame(const unsigned char *rgb565_data, int width, int height, int frame_size);
+
 #endif
