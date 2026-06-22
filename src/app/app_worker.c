@@ -393,6 +393,12 @@ static void *app_worker_preview_thread_func(void *arg)
 
         LOG_INFO("[WORKER] trigger received, run recognition once");
 
+        /*
+         * 关键：开始识别前标记 BUSY。
+         * 此时再按回车会被 app_trigger_request() 拒绝。
+         */
+        app_trigger_mark_busy();
+
         int ret = app_worker_run_once_from_preview(config);
 
         if (ret < 0) {
@@ -400,6 +406,12 @@ static void *app_worker_preview_thread_func(void *arg)
         } else {
             LOG_INFO("[WORKER] preview triggered run success");
         }
+
+        /*
+         * 关键：识别完成后进入 COOLDOWN。
+         * 冷却期间再次触发会被忽略。
+         */
+        app_trigger_mark_done();
 
         LOG_INFO("[WORKER] waiting for next trigger...");
     }
